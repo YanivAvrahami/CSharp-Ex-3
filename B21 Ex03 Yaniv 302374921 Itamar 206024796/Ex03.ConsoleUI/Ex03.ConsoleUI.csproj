@@ -32,14 +32,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commands\GoToHomeViewCommand.cs" />
+    <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\GoToViewCommand.cs" />
+    <Compile Include="ConsoleUtils.cs" />
+    <Compile Include="Interface\IUIStyle.cs" />
     <Compile Include="Interface\IRenderable.cs" />
-    <Compile Include="UI\Menu.cs" />
-    <Compile Include="UI\MenuButton.cs" />
+    <Compile Include="Interface\IUIElement.cs" />
+    <Compile Include="Interface\IUIInteractive.cs" />
+    <Compile Include="Transform.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="UI\UIStyles\UIDefaultStyle.cs" />
+    <Compile Include="UI\UIElements\UICheckBox.cs" />
+    <Compile Include="UI\UIStyles\UIDarkStyle.cs" />
+    <Compile Include="UI\UIStyles\UILightStyle.cs" />
+    <Compile Include="UI\UIStyles\UIProStyle.cs" />
+    <Compile Include="UI\UIElements\UITextBlock.cs" />
+    <Compile Include="ConsoleUI.cs" />
+    <Compile Include="UI\UIElements\UIButton.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="UI\BaseUI\UIContainer.cs" />
-    <Compile Include="UI\BaseUI\UIElement.cs" />
-    <Compile Include="UI\BaseUI\UIObject.cs" />
+    <Compile Include="UI\UIBase\UIView.cs" />
+    <Compile Include="UI\UIElements\UITextBox.cs" />
+    <Compile Include="Factories\UIViewFactory.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

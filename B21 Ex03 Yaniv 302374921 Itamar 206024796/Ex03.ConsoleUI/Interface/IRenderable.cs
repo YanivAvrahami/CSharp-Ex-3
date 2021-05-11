@@ -1,4 +1,4 @@
-﻿namespace TEST
+﻿namespace Ex03.ConsoleUI.Interface
 {
     public interface IRenderable
     {

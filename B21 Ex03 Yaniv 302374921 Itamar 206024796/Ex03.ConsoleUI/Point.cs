@@ -1,10 +1,9 @@
-﻿namespace TEST
+﻿namespace Ex03.ConsoleUI
 {
-    public struct Point
+    public class Point
     {
         public int X { get; set; }
         public int Y { get; set; }
-
 
         public Point(int i_X, int i_Y)
         {
