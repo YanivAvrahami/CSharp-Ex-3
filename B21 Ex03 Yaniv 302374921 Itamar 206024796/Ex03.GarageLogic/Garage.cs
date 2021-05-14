@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    class Garage
+    public class Garage
     {
         public CustomerBook CustomerBook { get; set; }
 
