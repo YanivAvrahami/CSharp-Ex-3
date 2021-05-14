@@ -4,7 +4,13 @@ namespace Ex03.GarageLogic
 {
     class CustomerBook
     {
-        private Dictionary<string, CustomerTicket> CustomerDictionary;
+        // TODO: remove this class and Garage will have the Dictionary
+        public Dictionary<string, CustomerTicket> CustomerDictionary { get; set; }
+
+        public CustomerBook()
+        {
+            CustomerDictionary = new Dictionary<string, CustomerTicket>();
+        }
 
         public bool IsCustomerExist(string i_LicenseNumber)
         {

@@ -42,7 +42,7 @@
     <Compile Include="enums\eColor.cs" />
     <Compile Include="enums\eFuelType.cs" />
     <Compile Include="enums\eLicense.cs" />
-    <Compile Include="eVehicleState.cs" />
+    <Compile Include="enums\eVehicleState.cs" />
     <Compile Include="Garage.cs" />
     <Compile Include="Vehicles\Base\ElectricityVehicle.cs" />
     <Compile Include="Vehicles\Base\FuelVehicle.cs" />
