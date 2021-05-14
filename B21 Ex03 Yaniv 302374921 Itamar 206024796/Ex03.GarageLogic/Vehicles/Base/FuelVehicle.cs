@@ -1,0 +1,25 @@
+﻿namespace Ex03.GarageLogic
+{
+    public abstract class FuelVehicle : Vehicle
+    {
+        public eFuelType FuelType { get; set; }
+        public float CurrentFuelAmount { get; set; }
+        public float MaxFuelAmount { get; set; }
+
+        public FuelVehicle(string i_ModelName, float i_CurrentEnergy)
+            : base(i_ModelName, i_CurrentEnergy)
+        {
+
+        }
+
+        public void Refuel(float i_FuelAmount)
+        {
+            if ((i_FuelAmount < 0) || (CurrentFuelAmount + i_FuelAmount > MaxFuelAmount))
+            {
+                // TODO: throw exception?
+            }
+
+            CurrentFuelAmount += i_FuelAmount;
+        }
+    }
+}
