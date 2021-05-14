@@ -1,4 +1,6 @@
-﻿namespace Ex03.GarageLogic
+﻿using System.Text;
+
+namespace Ex03.GarageLogic
 {
     abstract class ElectricityVehicle : Vehicle
     {
@@ -25,6 +27,15 @@
             }
 
             CurrentBatteryTime += i_ChargeAmount;
+        }
+
+        public override string GetInformationAboutVehicle()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"Fuel: {CurrentBatteryTime} of {MaxBatteryTime}");
+
+            return stringBuilder.ToString();
         }
     }
 }

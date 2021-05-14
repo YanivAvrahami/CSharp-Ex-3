@@ -11,6 +11,7 @@ namespace Ex03.ConsoleUI
         public bool IsRunning { get; set; }
         public Garage Garage { get; set; }
 
+
         public ConsoleUI()
         {
             UpdateMenuString();
@@ -68,7 +69,7 @@ namespace Ex03.ConsoleUI
                     chargeElectricVehicle();
                     break;
                 case "7":
-                    DisplayFullCarInfo();
+                    displayFullCarInfo();
                     break;
                 case "8":
                     exit();
@@ -176,9 +177,12 @@ namespace Ex03.ConsoleUI
             
         }
 
-        private void DisplayFullCarInfo()
+        private void displayFullCarInfo()
         {
-            
+            Console.WriteLine("Customer Information");
+            Console.WriteLine("--------------------");
+            Console.WriteLine("Enter license number:");
+            string licenseNumberString = Console.ReadLine();
         }
 
         private void exit()
@@ -191,4 +195,6 @@ namespace Ex03.ConsoleUI
             Console.Write(MenuString);
         }
     }
+
+
 }

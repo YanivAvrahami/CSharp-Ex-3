@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    class Truck : FuelVehicle
+    class Truck : PetrolVehicle
     {
         public bool HasHazardous { get; set; }
         public float MaxCarry { get; set; }

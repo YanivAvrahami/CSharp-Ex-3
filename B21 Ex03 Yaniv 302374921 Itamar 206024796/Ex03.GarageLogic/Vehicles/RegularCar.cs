@@ -1,6 +1,8 @@
-﻿namespace Ex03.GarageLogic
+﻿using System.Text;
+
+namespace Ex03.GarageLogic
 {
-    class RegularCar : FuelVehicle
+    class RegularCar : PetrolVehicle
     {
         public eColor Color { get; set; }
         public int Doors { get; set; }
@@ -19,6 +21,16 @@
         public override string GetCalssModelName()
         {
             return "Regular Car";
+        }
+
+        public override string GetInformationAboutVehicle()
+        {
+            StringBuilder stringBuilder = new StringBuilder(base.GetInformationAboutVehicle());
+
+            stringBuilder.AppendLine($"Color: {Color}");
+            stringBuilder.AppendLine($"Number of doors: {Doors}");
+
+            return stringBuilder.ToString();
         }
     }
 }
