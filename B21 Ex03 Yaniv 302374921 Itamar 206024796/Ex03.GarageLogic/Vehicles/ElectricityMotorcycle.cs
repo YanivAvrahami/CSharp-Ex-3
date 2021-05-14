@@ -1,4 +1,6 @@
-﻿namespace Ex03.GarageLogic
+﻿using System.Text;
+
+namespace Ex03.GarageLogic
 {
     class ElectricityMotorcycle : ElectricityVehicle
     {
@@ -19,6 +21,16 @@
         public override string GetCalssModelName()
         {
             return "Electric Motorcycle";
+        }
+
+        public override string GetInformationAboutVehicle()
+        {
+            StringBuilder stringBuilder = new StringBuilder(base.GetInformationAboutVehicle());
+
+            stringBuilder.AppendLine($"License: {License}");
+            stringBuilder.AppendLine($"Engine Volume: {EngineVolume}");
+
+            return stringBuilder.ToString();
         }
     }
 }

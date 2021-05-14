@@ -45,7 +45,7 @@
     <Compile Include="enums\eVehicleState.cs" />
     <Compile Include="Garage.cs" />
     <Compile Include="Vehicles\Base\ElectricityVehicle.cs" />
-    <Compile Include="Vehicles\Base\FuelVehicle.cs" />
+    <Compile Include="Vehicles\Base\PetrolVehicle.cs" />
     <Compile Include="Vehicles\Base\Vehicle.cs" />
     <Compile Include="Vehicles\ElectricityCar.cs" />
     <Compile Include="Vehicles\ElectricityMotorcycle.cs" />

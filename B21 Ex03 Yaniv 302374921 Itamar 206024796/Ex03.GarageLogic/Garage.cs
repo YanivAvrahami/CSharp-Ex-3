@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -44,7 +45,7 @@ namespace Ex03.GarageLogic
                 throw new FormatException("The requested type is not a vehicle");
             }
 
-            if (r_CustomerBook.IsCustomerExist(i_LicenseNumber))
+            if (r_CustomerBook.IsCustomerExist(i_LicenseNumber)) // TODO: Check if the UI handle it. If so, remove this condition block.
             {
                 r_CustomerBook.GetCustomer(i_LicenseNumber).VehicleState = eVehicleState.InRepair;
 
@@ -74,25 +75,6 @@ namespace Ex03.GarageLogic
 
             return vehicles;
         }
-
-        public void FuelPetrolVehicle(string i_LicenseNumber, eFuelType i_FuelType, int i_Quantity)
-        {
-            FuelVehicle vehicleToFuel = r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle as FuelVehicle;
-            if(vehicleToFuel != null)
-            {
-                vehicleToFuel.Refuel(i_Quantity, i_FuelType);
-            }
-        }
-
-        public void ChargeElectricVehicle(string i_LicenseNumber, int i_ChargingTimeInMin)
-        {
-            ElectricityVehicle vehicleToCharge = r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle as ElectricityVehicle;
-            if (vehicleToCharge != null)
-            {
-                vehicleToCharge.ChargeBattery(i_ChargingTimeInMin);
-            }
-        }
-
         public void ChangeVehicleState(string i_LicenseNumber, eVehicleState i_NewVehicleState)
         {
             r_CustomerBook.GetCustomer(i_LicenseNumber).VehicleState = i_NewVehicleState;
@@ -100,12 +82,62 @@ namespace Ex03.GarageLogic
 
         public void InflateVehicleWheelsToMax(string i_LicenseNumber)
         {
-            int numOfWheels = r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle.Wheels.Count;
-            for (int i = 0; i < numOfWheels; i++)
+            CustomerTicket customer = r_CustomerBook.GetCustomer(i_LicenseNumber);
+
+            foreach (Wheel wheel in customer.Vehicle.Wheels)
             {
-                Wheel currentWheelToInflate = r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle.Wheels[numOfWheels];
-                currentWheelToInflate.Inflate(currentWheelToInflate.MaxAirPressure);
+                wheel.Inflate(wheel.MaxAirPressure);
             }
+        }
+
+        public void RefuelPetrolVehicle(string i_LicenseNumber, eFuelType i_FuelType, int i_Quantity)
+        {
+            CustomerTicket customer = r_CustomerBook.GetCustomer(i_LicenseNumber);
+
+            (customer.Vehicle as PetrolVehicle).Refuel(i_Quantity, i_FuelType);
+        }
+
+        public void ChargeElectricVehicle(string i_LicenseNumber, int i_ChargingTimeInMinutes)
+        {
+            CustomerTicket customer = r_CustomerBook.GetCustomer(i_LicenseNumber);
+
+            (customer.Vehicle as ElectricityVehicle).ChargeBattery(i_ChargingTimeInMinutes);
+        }
+
+        public string GetCustomerInformationAsAstring(string i_LicenseNumber) // TODO: Add to different static class ( or customer class)
+        {
+            StringBuilder customerInfoStr = new StringBuilder();
+            CustomerTicket customer = r_CustomerBook.GetCustomer(i_LicenseNumber);
+            Vehicle vehicle = customer.Vehicle;
+
+            customerInfoStr.AppendLine($"License number: {i_LicenseNumber}");
+            customerInfoStr.AppendLine($"Model Name: {vehicle.ModelName}");
+            customerInfoStr.AppendLine($"Owner Name: {customer.FullName}");
+            customerInfoStr.AppendLine($"Vehicle State: {customer.VehicleState}");
+            customerInfoStr.AppendLine($"Wheel Air Pressure: {vehicle.Wheels[0].CurrentAirPressure}");
+            customerInfoStr.AppendLine($"Wheel Max Pressure: {vehicle.Wheels[0].MaxAirPressure}");
+
+            return customerInfoStr.ToString();
+        }
+
+        public bool IsPetrolVehicle(string i_LicenseNumber)
+        {
+            return r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle is PetrolVehicle;
+        }
+
+        public bool IsElectricityVehicle(string i_LicenseNumber)
+        {
+            return r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle is ElectricityVehicle;
+        }
+
+        public bool IsCustomerExist(string i_LicenseNumber)
+        {
+            return r_CustomerBook.IsCustomerExist(i_LicenseNumber);
+        }
+
+        public bool IsValidPhoneNumber(string i_PhoneNumber)
+        {
+            return false;
         }
     }
 }

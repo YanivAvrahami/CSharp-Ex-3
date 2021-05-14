@@ -1,6 +1,8 @@
-﻿namespace Ex03.GarageLogic
+﻿using System.Text;
+
+namespace Ex03.GarageLogic
 {
-    class RegularMotorcycle : FuelVehicle
+    class RegularMotorcycle : PetrolVehicle
     {
         public eLicense License { get; set; }
         public int EngineVolume { get; set; }
@@ -19,6 +21,16 @@
         public override string GetCalssModelName()
         {
             return "Regular Motorcycle";
+        }
+
+        public override string GetInformationAboutVehicle()
+        {
+            StringBuilder stringBuilder = new StringBuilder(base.GetInformationAboutVehicle());
+
+            stringBuilder.AppendLine($"License: {License}");
+            stringBuilder.AppendLine($"Engine Volume: {EngineVolume}");
+
+            return stringBuilder.ToString();
         }
     }
 }

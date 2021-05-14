@@ -1,17 +1,19 @@
-﻿namespace Ex03.GarageLogic
+﻿using System.Text;
+
+namespace Ex03.GarageLogic
 {
-    abstract class FuelVehicle : Vehicle
+    abstract class PetrolVehicle : Vehicle
     {
         public eFuelType FuelType { get; set; }
         public float CurrentFuelAmount { get; set; }
         public float MaxFuelAmount { get; set; }
 
-        public FuelVehicle() : base()
+        public PetrolVehicle() : base()
         {
 
         }
 
-        public FuelVehicle(string i_ModelName, float i_CurrentEnergy)
+        public PetrolVehicle(string i_ModelName, float i_CurrentEnergy)
             : base(i_ModelName, i_CurrentEnergy)
         {
 
@@ -27,6 +29,16 @@
             }
 
             CurrentFuelAmount += i_FuelAmount;
+        }
+
+        public override string GetInformationAboutVehicle()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"FuelType: {FuelType}");
+            stringBuilder.AppendLine($"Fuel: {CurrentFuelAmount} of {MaxFuelAmount}");
+
+            return stringBuilder.ToString();
         }
     }
 }
