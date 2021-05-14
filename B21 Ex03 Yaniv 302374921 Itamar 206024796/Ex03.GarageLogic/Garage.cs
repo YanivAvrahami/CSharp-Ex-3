@@ -90,7 +90,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void RefuelPetrolVehicle(string i_LicenseNumber, eFuelType i_FuelType, int i_Quantity)
+        public void RefuelPetrolVehicle(string i_LicenseNumber, eFuelType i_FuelType, float i_Quantity)
         {
             CustomerTicket customer = r_CustomerBook.GetCustomer(i_LicenseNumber);
 
@@ -134,11 +134,6 @@ namespace Ex03.GarageLogic
         public bool IsCustomerExist(string i_LicenseNumber)
         {
             return r_CustomerBook.IsCustomerExist(i_LicenseNumber);
-        }
-
-        public bool IsValidPhoneNumber(string i_PhoneNumber) // TODO: Complete
-        {
-            return false;
         }
     }
 }

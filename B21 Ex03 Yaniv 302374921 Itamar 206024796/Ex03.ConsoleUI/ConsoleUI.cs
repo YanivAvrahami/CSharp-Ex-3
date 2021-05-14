@@ -64,7 +64,7 @@ namespace Ex03.ConsoleUI
                     inflateVehicleWheelsToMax();
                     break;
                 case "5":
-                    FuelPetrolVehicle();
+                    refuelPetrolVehicle();
                     break;
                 case "6":
                     chargeElectricVehicle();
@@ -118,18 +118,11 @@ namespace Ex03.ConsoleUI
 
         private void ChangeVehicleState()
         {
-            Console.WriteLine("Change Car Status");
             Console.WriteLine("-----------------");
             Console.WriteLine("Enter license number:");
-            string licenseNumberString = Console.ReadLine();
+            string licenseNumberString = userInputGetExistLicense();
 
-            Console.WriteLine("Choosee state:");
-            Console.WriteLine("1. Repaired");
-            Console.WriteLine("2. In repair");
-            Console.WriteLine("3. Paid");
-            Console.WriteLine("Enter option: ");
-            string stateInputString = Console.ReadLine();
-            int choice = int.Parse(stateInputString);
+            int choice = userInputVehicleState();
 
             List<string> licenseStrings;
 
@@ -150,25 +143,162 @@ namespace Ex03.ConsoleUI
 
         private void inflateVehicleWheelsToMax()
         {
-            
+            Console.WriteLine("--------------");
+            Console.WriteLine("Enter license number:");
+            string licenseNumberString = userInputGetExistLicense();
+
+            Garage.InflateVehicleWheelsToMax(licenseNumberString);
         }
 
-        private void FuelPetrolVehicle()
+        private void refuelPetrolVehicle()
         {
-            
+            Console.WriteLine("--------------");
+            Console.WriteLine("Enter license number:");
+            string licenseNumberString = userInputGetExistLicense();
+
+            if (!Garage.IsPetrolVehicle(licenseNumberString))
+            {
+                Console.WriteLine("The vehicle is not electricity");
+            }
+            else
+            {
+                eFuelType fuelType = userInputGetFuelType();
+                float fuelAmount = userInputRefuelAmount();
+
+                Garage.RefuelPetrolVehicle(licenseNumberString, fuelType, fuelAmount);
+            }
         }
 
         private void chargeElectricVehicle()
         {
-            
+            Console.WriteLine("--------------");
+            Console.WriteLine("Enter license number:");
+            string licenseNumberString = userInputGetExistLicense();
+
+            if (!Garage.IsElectricityVehicle(licenseNumberString))
+            {
+                Console.WriteLine("The vehicle is not electricity");
+            }
+            else
+            {
+                int batteryMinutes = userInputBatteryChargeTime();
+
+                Garage.ChargeElectricVehicle(licenseNumberString, batteryMinutes);
+            }
         }
 
         private void displayFullCarInfo()
         {
-            Console.WriteLine("Customer Information");
             Console.WriteLine("--------------------");
             Console.WriteLine("Enter license number:");
-            string licenseNumberString = Console.ReadLine();
+            string licenseNumberString = userInputGetExistLicense();
+
+            Console.WriteLine(Garage.GetCustomerInformationAsAstring(licenseNumberString));
+        }
+
+        private string userInputGetExistLicense()
+        {
+            string licenseNumberString;
+
+            do
+            {
+                licenseNumberString = Console.ReadLine();
+
+            } while (Garage.IsCustomerExist(licenseNumberString));
+
+            return licenseNumberString;
+        }
+
+        private eFuelType userInputGetFuelType()
+        {
+            Console.WriteLine("Fuel Types:");
+            Console.WriteLine(getEnumAsStringOptions<eFuelType>());
+
+            string fuelTypeStr;
+            int fuelTypeChoosen;
+
+            do
+            {
+                fuelTypeStr = Console.ReadLine();
+
+                if (!int.TryParse(fuelTypeStr, out fuelTypeChoosen))
+                {
+                    throw new FormatException("The input is not an integer.");
+                }
+
+            } while (1 <= fuelTypeChoosen && fuelTypeChoosen <= Enum.GetNames(typeof(eFuelType)).Length);
+
+            return (eFuelType)Enum.Parse(typeof(eFuelType), fuelTypeStr);
+        }
+
+        private int userInputBatteryChargeTime()
+        {
+            Console.WriteLine("Enter Charging time in minutes:");
+
+            string batteryMinutesStr;
+            int batteryMinutes;
+
+            batteryMinutesStr = Console.ReadLine();
+            if (!int.TryParse(batteryMinutesStr, out batteryMinutes))
+            {
+                throw new FormatException("The input is not an integer.");
+            }
+
+            return batteryMinutes;
+        }
+
+        private float userInputRefuelAmount()
+        {
+            Console.WriteLine("Enter fuel amount:");
+
+            string refuelAmountStr;
+            float refuelAmount;
+
+            refuelAmountStr = Console.ReadLine();
+            if (!float.TryParse(refuelAmountStr, out refuelAmount))
+            {
+                throw new FormatException("The input is not a float.");
+            }
+
+            return refuelAmount;
+        }
+
+        private int userInputVehicleState()
+        {
+            Console.WriteLine("Choose state:");
+            Console.WriteLine(getEnumAsStringOptions<eVehicleState>());
+
+            string stateInputStr;
+            int stateChoosen;
+
+            do
+            {
+                stateInputStr = Console.ReadLine();
+
+                if (!int.TryParse(stateInputStr, out stateChoosen))
+                {
+                    throw new FormatException("The input is not an integer.");
+                }
+
+            } while (1 <= stateChoosen && stateChoosen <= Enum.GetNames(typeof(eVehicleState)).Length);
+
+            return stateChoosen;
+        }
+
+        private string getEnumAsStringOptions<T>() // TODO: fuck off to another class lazzy bitch
+        {
+            StringBuilder enumTypesStrBuilder = new StringBuilder();
+            int index = 1;
+
+            foreach (string currentEnumTypeName in Enum.GetNames(typeof(T)))
+            {
+                enumTypesStrBuilder.AppendLine($"{index}. {currentEnumTypeName}");
+                index++;
+            }
+
+            enumTypesStrBuilder.AppendLine("Enter option: ");
+
+            return enumTypesStrBuilder.ToString();
         }
 
         private void exit()
