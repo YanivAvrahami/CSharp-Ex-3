@@ -12,9 +12,11 @@
 
         }
 
-        public void Refuel(float i_FuelAmount)
+        public void Refuel(float i_FuelAmount, eFuelType i_FuelType)
         {
-            if ((i_FuelAmount < 0) || (CurrentFuelAmount + i_FuelAmount > MaxFuelAmount))
+            if ((i_FuelType != FuelType) || 
+                (i_FuelAmount < 0) ||
+                (CurrentFuelAmount + i_FuelAmount > MaxFuelAmount))
             {
                 // TODO: throw exception?
             }
