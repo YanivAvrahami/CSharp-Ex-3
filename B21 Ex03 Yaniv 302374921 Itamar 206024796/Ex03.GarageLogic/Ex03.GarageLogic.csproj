@@ -37,8 +37,20 @@
   <ItemGroup>
     <Compile Include="CustomerBook.cs" />
     <Compile Include="CustomerTicket.cs" />
+    <Compile Include="enums\eColor.cs" />
+    <Compile Include="enums\eFuelType.cs" />
+    <Compile Include="enums\eLicense.cs" />
     <Compile Include="eVehicleState.cs" />
     <Compile Include="Garage.cs" />
+    <Compile Include="Vehicles\Base\ElectricityVehicle.cs" />
+    <Compile Include="Vehicles\Base\FuelVehicle.cs" />
+    <Compile Include="Vehicles\Base\Vehicle.cs" />
+    <Compile Include="Vehicles\ElectricityCar.cs" />
+    <Compile Include="Vehicles\ElectricityMotorcycle.cs" />
+    <Compile Include="Vehicles\RegularCar.cs" />
+    <Compile Include="Vehicles\RegularMotorcycle.cs" />
+    <Compile Include="Vehicles\Truck.cs" />
+    <Compile Include="Wheel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
