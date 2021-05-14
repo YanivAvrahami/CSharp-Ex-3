@@ -35,6 +35,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commands\CreateNewVehicleCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="CustomerBook.cs" />
     <Compile Include="CustomerTicket.cs" />
     <Compile Include="enums\eColor.cs" />
@@ -52,5 +54,6 @@
     <Compile Include="Vehicles\Truck.cs" />
     <Compile Include="Wheel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

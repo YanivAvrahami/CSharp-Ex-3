@@ -5,7 +5,7 @@ namespace Ex03.GarageLogic
     public abstract class Vehicle
     {
         public string ModelName { get; set; }
-        public string SerialNumber { get; set; }
+        public string LicenseNumber { get; set; }
         public float EnergyPercentage { get; set; }
         public List<Wheel> Wheels { get; set; }
 
@@ -14,6 +14,5 @@ namespace Ex03.GarageLogic
             ModelName = i_ModelName;
             EnergyPercentage = i_CurrentEnergy;
         }
-
     }
 }
