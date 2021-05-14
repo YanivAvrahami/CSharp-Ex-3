@@ -21,13 +21,19 @@
         public void FuelPetrolVehicle(string i_LicenseNumber, eFuelType i_FuelType, int i_Quantity)
         {
             FuelVehicle vehicleToFuel = CustomerBook.GetCustomer(i_LicenseNumber).Vehicle as FuelVehicle;
-            vehicleToFuel.Refuel(i_Quantity, i_FuelType);
+            if(vehicleToFuel != null)
+            {
+                vehicleToFuel.Refuel(i_Quantity, i_FuelType);
+            }
         }
 
         public void ChargeElectricVehicle(string i_LicenseNumber, int i_ChargingTimeInMin)
         {
             ElectricityVehicle vehicleToCharge = CustomerBook.GetCustomer(i_LicenseNumber).Vehicle as ElectricityVehicle;
-            vehicleToCharge.ChargeBattery(i_ChargingTimeInMin);
+            if (vehicleToCharge != null)
+            {
+                vehicleToCharge.ChargeBattery(i_ChargingTimeInMin);
+            }
         }
 
     }
