@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Text;
 using Ex03.GarageLogic;
 
@@ -54,16 +53,16 @@ namespace Ex03.ConsoleUI
                     addVehicle();
                     break;
                 case "2":
-                    DisplayAllLicensePlates();
+                    displayAllLicensePlates();
                     break;
                 case "3":
-                    ChangeVehicleState();
+                    changeVehicleState();
                     break;
                 case "4":
                     inflateVehicleWheelsToMax();
                     break;
                 case "5":
-                    FuelPetrolVehicle();
+                    fuelPetrolVehicle();
                     break;
                 case "6":
                     chargeElectricVehicle();
@@ -82,7 +81,7 @@ namespace Ex03.ConsoleUI
             throw new NotImplementedException();
         }
 
-        private void DisplayAllLicensePlates()
+        private void displayAllLicensePlates()
         {
             StringBuilder strBuilder = new StringBuilder();
             strBuilder.AppendLine("Display All License Plates");
@@ -94,10 +93,26 @@ namespace Ex03.ConsoleUI
             strBuilder.AppendLine("");
             Console.WriteLine(strBuilder);
 
+
             string inputString = Console.ReadLine();
             int choice = int.Parse(inputString);
+            eVehicleState vehicleStateChoice;
+            switch(choice)
+            {
+                case 1:
+                    vehicleStateChoice = eVehicleState.Repair;
+                    break;
 
-            List<string> licenseStrings;
+                case 2:
+
+                    break;
+
+                case 3:
+
+                    break;
+            }
+
+            List<string> licenseStrings = Garage.GetLicensesByState(true, );
 
 
             switch(choice)
@@ -115,7 +130,7 @@ namespace Ex03.ConsoleUI
             
         }
 
-        private void ChangeVehicleState()
+        private void changeVehicleState()
         {
             Console.WriteLine("Change Car Status");
             Console.WriteLine("-----------------");
@@ -131,7 +146,6 @@ namespace Ex03.ConsoleUI
             int choice = int.Parse(stateInputString);
 
             List<string> licenseStrings;
-
 
             switch (choice)
             {
@@ -152,7 +166,7 @@ namespace Ex03.ConsoleUI
             
         }
 
-        private void FuelPetrolVehicle()
+        private void fuelPetrolVehicle()
         {
             
         }
