@@ -29,7 +29,7 @@ namespace Ex03.GarageLogic
             CurrentBatteryTime += i_ChargeAmount;
         }
 
-        public override string GetInformationAboutVehicle()
+        public override string GetInformationAboutVehicleAsString()
         {
             StringBuilder stringBuilder = new StringBuilder();
 

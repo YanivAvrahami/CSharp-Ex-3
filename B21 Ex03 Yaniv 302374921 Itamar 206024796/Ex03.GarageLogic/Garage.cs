@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
+    // TODO: create constructros for the vehicles.
+    //       create new vehicle method to complete
+
     public class Garage
     {
         private readonly CustomerBook r_CustomerBook;
@@ -38,7 +41,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void AddVehicle(string i_LicenseNumber, string i_Vehicle)
+        public void AddVehicle(string i_LicenseNumber, string i_Vehicle, float i_CurrentEnergy)
         {
             if (!AvailableVehicles.Contains(i_Vehicle))
             {
@@ -55,6 +58,7 @@ namespace Ex03.GarageLogic
             CustomerTicket customerTicket = new CustomerTicket();
             customerTicket.Vehicle = (Vehicle)Activator.CreateInstance(r_VehiclesTypes[i_Vehicle]);
             customerTicket.VehicleState = eVehicleState.InRepair;
+            customerTicket.Vehicle.LicenseNumber = i_LicenseNumber;
 
             r_CustomerBook.AddCustomer(customerTicket);
         }
@@ -97,11 +101,11 @@ namespace Ex03.GarageLogic
             (customer.Vehicle as PetrolVehicle).Refuel(i_Quantity, i_FuelType);
         }
 
-        public void ChargeElectricVehicle(string i_LicenseNumber, int i_ChargingTimeInMinutes)
+        public void ChargeElectricVehicle(string i_LicenseNumber, float i_ChargingTimeInHours)
         {
             CustomerTicket customer = r_CustomerBook.GetCustomer(i_LicenseNumber);
 
-            (customer.Vehicle as ElectricityVehicle).ChargeBattery(i_ChargingTimeInMinutes);
+            (customer.Vehicle as ElectricityVehicle).ChargeBattery(i_ChargingTimeInHours);
         }
 
         public string GetCustomerInformationAsAstring(string i_LicenseNumber) // TODO: Add to different static class ( or customer class)
@@ -116,7 +120,7 @@ namespace Ex03.GarageLogic
             customerInfoStr.AppendLine($"Vehicle State: {customer.VehicleState}");
             customerInfoStr.AppendLine($"Wheel Air Pressure: {vehicle.Wheels[0].CurrentAirPressure}");
             customerInfoStr.AppendLine($"Wheel Max Pressure: {vehicle.Wheels[0].MaxAirPressure}");
-            customerInfoStr.AppendLine(vehicle.GetInformationAboutVehicle());
+            customerInfoStr.AppendLine(vehicle.GetInformationAboutVehicleAsString());
 
             return customerInfoStr.ToString();
         }

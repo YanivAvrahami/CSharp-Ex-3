@@ -23,9 +23,9 @@ namespace Ex03.GarageLogic
             return "Electric Motorcycle";
         }
 
-        public override string GetInformationAboutVehicle()
+        public override string GetInformationAboutVehicleAsString()
         {
-            StringBuilder stringBuilder = new StringBuilder(base.GetInformationAboutVehicle());
+            StringBuilder stringBuilder = new StringBuilder(base.GetInformationAboutVehicleAsString());
 
             stringBuilder.AppendLine($"License: {License}");
             stringBuilder.AppendLine($"Engine Volume: {EngineVolume}");

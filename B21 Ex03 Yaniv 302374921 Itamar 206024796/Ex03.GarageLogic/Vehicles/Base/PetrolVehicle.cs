@@ -31,7 +31,7 @@ namespace Ex03.GarageLogic
             CurrentFuelAmount += i_FuelAmount;
         }
 
-        public override string GetInformationAboutVehicle()
+        public override string GetInformationAboutVehicleAsString()
         {
             StringBuilder stringBuilder = new StringBuilder();
 

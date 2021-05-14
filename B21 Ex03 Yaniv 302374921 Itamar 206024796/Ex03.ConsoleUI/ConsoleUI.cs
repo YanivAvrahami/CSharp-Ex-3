@@ -15,10 +15,11 @@ namespace Ex03.ConsoleUI
 
         public ConsoleUI()
         {
-            UpdateMenuString();
+            Garage = new Garage();
+            updateMenuString();
         }
 
-        void UpdateMenuString()
+        private void updateMenuString()
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("Garage Menu:");
@@ -36,14 +37,15 @@ namespace Ex03.ConsoleUI
 
         public void Run()
         {
-            Console.ReadLine();
+            IsRunning = true;
 
             while (IsRunning)
             {
+                displayMenu();
+                executeMenuSelection(Console.ReadLine());
+                Console.WriteLine("Enter key to continue...");
+                Console.ReadKey();
                 Console.Clear();
-                DisplayMenu();
-                string stringInput = Console.ReadLine();
-                executeMenuSelection(stringInput);
             }
         }
 
@@ -55,10 +57,10 @@ namespace Ex03.ConsoleUI
                     addVehicle();
                     break;
                 case "2":
-                    DisplayAllLicensePlates();
+                    displayAllLicensePlates();
                     break;
                 case "3":
-                    ChangeVehicleState();
+                    changeVehicleState();
                     break;
                 case "4":
                     inflateVehicleWheelsToMax();
@@ -80,81 +82,58 @@ namespace Ex03.ConsoleUI
 
         private void addVehicle()
         {
-            throw new NotImplementedException();
-        }
-
-        private void DisplayAllLicensePlates()
-        {
-            StringBuilder strBuilder = new StringBuilder();
-            strBuilder.AppendLine("Display All License Plates");
-            strBuilder.AppendLine("--------------------------");
-            strBuilder.AppendLine("Filter by tags:");
-            strBuilder.AppendLine("1. Repaired");
-            strBuilder.AppendLine("2. In Repair");
-            strBuilder.AppendLine("3. Paid");
-            strBuilder.AppendLine("");
-            Console.WriteLine(strBuilder);
-
-            string inputString = Console.ReadLine();
-            int choice = int.Parse(inputString);
-
-            List<string> licenseStrings;
-
-
-            switch(choice)
-            {
-                case 1:
-
-                    break;
-                case 2:
-
-                    break;
-                case 3:
-
-                    break;
-            }
-            
-        }
-
-        private void ChangeVehicleState()
-        {
-            Console.WriteLine("-----------------");
+            Console.WriteLine("---------------------");
             Console.WriteLine("Enter license number:");
-            string licenseNumberString = userInputGetExistLicense();
+            string licenseNumberString = Console.ReadLine();
 
-            int choice = userInputVehicleState();
-
-            List<string> licenseStrings;
-
-
-            switch (choice)
+            for (int i = 1; i <= Garage.AvailableVehicles.Count; i++)
             {
-                case 1:
-
-                    break;
-                case 2:
-
-                    break;
-                case 3:
-
-                    break;
+                Console.WriteLine(string.Format("{0}. {1}", i, Garage.AvailableVehicles[i - 1]));
             }
+
+            string userInputStr = Console.ReadLine();
+            int vehicleType = int.Parse(userInputStr);
+
+            Garage.AddVehicle(licenseNumberString, Garage.AvailableVehicles[vehicleType - 1]);
+        }
+
+        private void displayAllLicensePlates()
+        {
+            Console.WriteLine("Filter by tag (Y/n):");
+            string boolInput = Console.ReadKey().KeyChar.ToString();
+            bool shouldConsiderState = boolInput.ToLower() == "y";
+            eVehicleState stateTypeChoosen = eVehicleState.InRepair;
+
+            if (shouldConsiderState)
+            {
+                stateTypeChoosen = userInputGetFilterState();
+            }
+
+            List<string> licenses = Garage.GetLicensesByState(shouldConsiderState, stateTypeChoosen);
+            foreach (var item in licenses)
+            {
+                Console.WriteLine(item);
+            }
+        }
+
+        private void changeVehicleState()
+        {
+            string licenseNumberString = userInputGetExistLicenseWithMessage();
+            eVehicleState stateTypeChoosen = userInputVehicleState();
+
+            Garage.ChangeVehicleState(licenseNumberString, stateTypeChoosen);
         }
 
         private void inflateVehicleWheelsToMax()
         {
-            Console.WriteLine("--------------");
-            Console.WriteLine("Enter license number:");
-            string licenseNumberString = userInputGetExistLicense();
+            string licenseNumberString = userInputGetExistLicenseWithMessage();
 
             Garage.InflateVehicleWheelsToMax(licenseNumberString);
         }
 
         private void refuelPetrolVehicle()
         {
-            Console.WriteLine("--------------");
-            Console.WriteLine("Enter license number:");
-            string licenseNumberString = userInputGetExistLicense();
+            string licenseNumberString = userInputGetExistLicenseWithMessage();
 
             if (!Garage.IsPetrolVehicle(licenseNumberString))
             {
@@ -171,9 +150,7 @@ namespace Ex03.ConsoleUI
 
         private void chargeElectricVehicle()
         {
-            Console.WriteLine("--------------");
-            Console.WriteLine("Enter license number:");
-            string licenseNumberString = userInputGetExistLicense();
+            string licenseNumberString = userInputGetExistLicenseWithMessage();
 
             if (!Garage.IsElectricityVehicle(licenseNumberString))
             {
@@ -181,7 +158,7 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                int batteryMinutes = userInputBatteryChargeTime();
+                float batteryMinutes = userInputBatteryChargeTime();
 
                 Garage.ChargeElectricVehicle(licenseNumberString, batteryMinutes);
             }
@@ -189,12 +166,30 @@ namespace Ex03.ConsoleUI
 
         private void displayFullCarInfo()
         {
-            Console.WriteLine("--------------------");
-            Console.WriteLine("Enter license number:");
-            string licenseNumberString = userInputGetExistLicense();
+            string licenseNumberString = userInputGetExistLicenseWithMessage();
 
             Console.WriteLine(Garage.GetCustomerInformationAsAstring(licenseNumberString));
         }
+
+        private string userInputGetExistLicenseWithMessage()
+        {
+            Console.WriteLine("---------------------");
+            Console.WriteLine("Enter license number:");
+
+            return userInputGetExistLicense();
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Console utils
+        /// Console utils
+        /// Console utils
+        /// </summary>
+
 
         private string userInputGetExistLicense()
         {
@@ -204,88 +199,92 @@ namespace Ex03.ConsoleUI
             {
                 licenseNumberString = Console.ReadLine();
 
-            } while (Garage.IsCustomerExist(licenseNumberString));
+            } while (!Garage.IsCustomerExist(licenseNumberString));
 
             return licenseNumberString;
+        }
+
+        private eVehicleState userInputGetFilterState()
+        {
+            Console.WriteLine("Filter by tags:");
+
+            return userInputGetEnumTypeOption<eVehicleState>();
         }
 
         private eFuelType userInputGetFuelType()
         {
             Console.WriteLine("Fuel Types:");
-            Console.WriteLine(getEnumAsStringOptions<eFuelType>());
 
-            string fuelTypeStr;
-            int fuelTypeChoosen;
-
-            do
-            {
-                fuelTypeStr = Console.ReadLine();
-
-                if (!int.TryParse(fuelTypeStr, out fuelTypeChoosen))
-                {
-                    throw new FormatException("The input is not an integer.");
-                }
-
-            } while (1 <= fuelTypeChoosen && fuelTypeChoosen <= Enum.GetNames(typeof(eFuelType)).Length);
-
-            return (eFuelType)Enum.Parse(typeof(eFuelType), fuelTypeStr);
+            return userInputGetEnumTypeOption<eFuelType>();
         }
 
-        private int userInputBatteryChargeTime()
+        private eVehicleState userInputVehicleState()
+        {
+            Console.WriteLine("Choose state:");
+
+            return userInputGetEnumTypeOption<eVehicleState>();
+        }
+
+        private float userInputBatteryChargeTime()
         {
             Console.WriteLine("Enter Charging time in minutes:");
 
-            string batteryMinutesStr;
-            int batteryMinutes;
-
-            batteryMinutesStr = Console.ReadLine();
-            if (!int.TryParse(batteryMinutesStr, out batteryMinutes))
-            {
-                throw new FormatException("The input is not an integer.");
-            }
-
-            return batteryMinutes;
+            return userInputIncreaseEnergy();
         }
 
         private float userInputRefuelAmount()
         {
             Console.WriteLine("Enter fuel amount:");
 
-            string refuelAmountStr;
-            float refuelAmount;
+            return userInputIncreaseEnergy();
+        }
 
-            refuelAmountStr = Console.ReadLine();
-            if (!float.TryParse(refuelAmountStr, out refuelAmount))
+        private float userInputIncreaseEnergy()
+        {
+            string EnergyToIncreaseStr;
+            float EnergyToIncrease;
+
+            EnergyToIncreaseStr = Console.ReadLine();
+            if (!float.TryParse(EnergyToIncreaseStr, out EnergyToIncrease))
             {
                 throw new FormatException("The input is not a float.");
             }
 
-            return refuelAmount;
+            return EnergyToIncrease;
         }
 
-        private int userInputVehicleState()
+        private T userInputGetEnumTypeOption<T>()
         {
-            Console.WriteLine("Choose state:");
-            Console.WriteLine(getEnumAsStringOptions<eVehicleState>());
+            Console.WriteLine(getEnumAsStringOptions<T>());
 
-            string stateInputStr;
-            int stateChoosen;
+            string inputStr;
+            int typeChoosen;
 
             do
             {
-                stateInputStr = Console.ReadLine();
+                inputStr = Console.ReadLine();
 
-                if (!int.TryParse(stateInputStr, out stateChoosen))
+                if (!int.TryParse(inputStr, out typeChoosen))
                 {
                     throw new FormatException("The input is not an integer.");
                 }
 
-            } while (1 <= stateChoosen && stateChoosen <= Enum.GetNames(typeof(eVehicleState)).Length);
+            } while (!(1 <= typeChoosen && typeChoosen <= Enum.GetNames(typeof(T)).Length));
 
-            return stateChoosen;
+            return (T)Enum.Parse(typeof(T), inputStr);
         }
 
-        private string getEnumAsStringOptions<T>() // TODO: fuck off to another class lazzy bitch
+
+
+
+
+
+
+
+
+
+
+        private string getEnumAsStringOptions<T>() // TODO: move to logic
         {
             StringBuilder enumTypesStrBuilder = new StringBuilder();
             int index = 1;
@@ -301,12 +300,20 @@ namespace Ex03.ConsoleUI
             return enumTypesStrBuilder.ToString();
         }
 
+
+
+
+
+
+
+
+
         private void exit()
         {
             IsRunning = false;
         }
 
-        void DisplayMenu()
+        private void displayMenu()
         {
             Console.Write(MenuString);
         }

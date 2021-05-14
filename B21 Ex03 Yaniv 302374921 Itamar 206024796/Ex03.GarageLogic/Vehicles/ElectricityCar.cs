@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
             return "Electric Car";
         }
 
-        public override string GetInformationAboutVehicle()
+        public override string GetInformationAboutVehicleAsString()
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"Color: {Color}");

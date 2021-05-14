@@ -22,6 +22,6 @@ namespace Ex03.GarageLogic
 
         public abstract string GetCalssModelName();
 
-        public abstract string GetInformationAboutVehicle();
+        public abstract string GetInformationAboutVehicleAsString();
     }
 }
