@@ -34,5 +34,11 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CustomerBook.cs" />
+    <Compile Include="CustomerTicket.cs" />
+    <Compile Include="eVehicleState.cs" />
+    <Compile Include="Garage.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

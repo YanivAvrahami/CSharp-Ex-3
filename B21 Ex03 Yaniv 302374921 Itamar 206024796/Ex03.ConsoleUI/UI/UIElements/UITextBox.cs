@@ -1,9 +1,8 @@
 ﻿using System;
 using Ex03.ConsoleUI.Factories;
 using Ex03.ConsoleUI.UI.UIBase;
-using Ex03.ConsoleUI.UI.UIElements;
 
-namespace Ex03.ConsoleUI.UIClasses
+namespace Ex03.ConsoleUI.UI.UIElements
 {
     public class UITextBox : IUIInteractive
     {

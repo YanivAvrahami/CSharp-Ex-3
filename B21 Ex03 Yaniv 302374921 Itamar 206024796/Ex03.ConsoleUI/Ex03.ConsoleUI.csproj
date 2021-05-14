@@ -33,11 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\GoToHomeViewCommand.cs" />
-    <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\ExitProgramCommand.cs" />
     <Compile Include="Commands\GoToViewCommand.cs" />
     <Compile Include="ConsoleUtils.cs" />
     <Compile Include="Interface\IUIStyle.cs" />
-    <Compile Include="Interface\IRenderable.cs" />
     <Compile Include="Interface\IUIElement.cs" />
     <Compile Include="Interface\IUIInteractive.cs" />
     <Compile Include="Transform.cs" />

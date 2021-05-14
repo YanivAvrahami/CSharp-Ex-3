@@ -1,21 +1,19 @@
 ﻿using System.Collections.Generic;
 using Ex03.ConsoleUI.UI.UIBase;
 
-namespace Ex03.ConsoleUI.UIClasses.BaseUI
+namespace Ex03.ConsoleUI.UI.UIBase
 {
     public class UIView
     {
         public List<IUIElement> UIElements { get; set; }
         public int CurrentIndex { get; set; }
 
-        private IUIInteractive m_CurrentUIInteractive;
         public IUIInteractive CurrentUIInteractive {
             get { return UIElements[CurrentIndex] as IUIInteractive; }
-            set { m_CurrentUIInteractive = value; }
         }
 
         public int Bottom { set; get; }
-
+        
         public UIView()
         {
             UIElements = new List<IUIElement>();
@@ -106,7 +104,6 @@ namespace Ex03.ConsoleUI.UIClasses.BaseUI
                     break;
                 }
             }
-            
         }
 
         public bool IsUIInteractiveExist()

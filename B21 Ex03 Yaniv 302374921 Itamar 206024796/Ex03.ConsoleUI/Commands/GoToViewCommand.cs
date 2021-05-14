@@ -1,5 +1,4 @@
-﻿using Ex03.ConsoleUI.UI.UIElements;
-using Ex03.ConsoleUI.UIClasses.BaseUI;
+﻿using Ex03.ConsoleUI.UI.UIBase;
 
 namespace Ex03.ConsoleUI.Commands
 {

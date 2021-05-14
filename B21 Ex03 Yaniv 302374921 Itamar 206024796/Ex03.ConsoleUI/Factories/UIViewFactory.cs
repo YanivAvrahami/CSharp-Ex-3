@@ -1,10 +1,8 @@
-﻿using System;
-using Ex03.ConsoleUI.Commands;
+﻿using Ex03.ConsoleUI.Commands;
+using Ex03.ConsoleUI.UI.UIBase;
 using Ex03.ConsoleUI.UI.UIElements;
-using Ex03.ConsoleUI.UIClasses;
-using Ex03.ConsoleUI.UIClasses.BaseUI;
 
-namespace Ex03.ConsoleUI
+namespace Ex03.ConsoleUI.Factories
 {
     public class UIViewFactory
     {
@@ -41,7 +39,7 @@ namespace Ex03.ConsoleUI
             command = new GoToViewCommand(ConsoleUI, CreateDisplayFullCarInfoView());
             view.AddUIElement(new UIButton("Display full car information", command));
 
-            view.AddUIElement(new UIButton("Exit", new ExitCommand(ConsoleUI)), 1);
+            view.AddUIElement(new UIButton("Exit", new ExitProgramCommand(ConsoleUI)), 1);
             return view;
         }
 
@@ -102,7 +100,7 @@ namespace Ex03.ConsoleUI
             view.AddUIElement(new UICheckBox("Octan96"));
             view.AddUIElement(new UICheckBox("Octan98"));
             view.AddUIElement(new UITextBox("Quantity of filling"), 1);
-            view.AddUIElement(new UIButton("Fuel", new ExitCommand(ConsoleUI)), 1);
+            view.AddUIElement(new UIButton("Fuel", new ExitProgramCommand(ConsoleUI)), 1);
             view.AddUIElement(new UIButton("Back", new GoToHomeViewCommand(ConsoleUI)), 1); 
             return view;
         }
@@ -114,7 +112,6 @@ namespace Ex03.ConsoleUI
             view.AddUIElement(new UITextBox("License number"));
             view.AddUIElement(new UITextBox("Duration in minutes"));
             view.AddUIElement(new UIButton("Back", new GoToHomeViewCommand(ConsoleUI)), 1);
-
             return view;
         }
 

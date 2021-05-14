@@ -1,4 +1,4 @@
-﻿namespace Ex03.ConsoleUI.UI.UIElements
+﻿namespace Ex03.ConsoleUI.Commands
 {
     public interface ICommand
     {

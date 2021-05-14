@@ -1,6 +1,4 @@
-﻿using Ex03.ConsoleUI.UI.UIElements;
-
-namespace Ex03.ConsoleUI.Commands
+﻿namespace Ex03.ConsoleUI.Commands
 {
     class GoToHomeViewCommand : ICommand
     {

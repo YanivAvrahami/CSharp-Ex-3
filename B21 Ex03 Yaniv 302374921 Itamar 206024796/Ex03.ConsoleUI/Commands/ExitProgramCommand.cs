@@ -1,13 +1,10 @@
-﻿using System;
-using Ex03.ConsoleUI.UI.UIElements;
-
-namespace Ex03.ConsoleUI.Commands
+﻿namespace Ex03.ConsoleUI.Commands
 {
-    class ExitCommand : ICommand
+    class ExitProgramCommand : ICommand
     {
         public ConsoleUI ConsoleUI { get; set; }
 
-        public ExitCommand(ConsoleUI i_ConsoleUI)
+        public ExitProgramCommand(ConsoleUI i_ConsoleUI)
         {
             ConsoleUI = i_ConsoleUI;
         }

@@ -1,7 +1,7 @@
 ﻿using System;
+using Ex03.ConsoleUI.Factories;
+using Ex03.ConsoleUI.UI.UIBase;
 using Ex03.ConsoleUI.UI.UIElements;
-using Ex03.ConsoleUI.UIClasses;
-using Ex03.ConsoleUI.UIClasses.BaseUI;
 
 namespace Ex03.ConsoleUI
 {

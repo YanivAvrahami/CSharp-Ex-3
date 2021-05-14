@@ -1,4 +1,4 @@
-﻿namespace Ex03.ConsoleUI.UI.UIElements
+﻿namespace Ex03.ConsoleUI
 {
     public class Transform
     {
