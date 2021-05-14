@@ -116,6 +116,7 @@ namespace Ex03.GarageLogic
             customerInfoStr.AppendLine($"Vehicle State: {customer.VehicleState}");
             customerInfoStr.AppendLine($"Wheel Air Pressure: {vehicle.Wheels[0].CurrentAirPressure}");
             customerInfoStr.AppendLine($"Wheel Max Pressure: {vehicle.Wheels[0].MaxAirPressure}");
+            customerInfoStr.AppendLine(vehicle.GetInformationAboutVehicle());
 
             return customerInfoStr.ToString();
         }
@@ -135,7 +136,7 @@ namespace Ex03.GarageLogic
             return r_CustomerBook.IsCustomerExist(i_LicenseNumber);
         }
 
-        public bool IsValidPhoneNumber(string i_PhoneNumber)
+        public bool IsValidPhoneNumber(string i_PhoneNumber) // TODO: Complete
         {
             return false;
         }
