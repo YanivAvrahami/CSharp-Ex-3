@@ -1,9 +1,15 @@
 ﻿namespace Ex03.GarageLogic
 {
-    public abstract class ElectricityVehicle : Vehicle
+    abstract class ElectricityVehicle : Vehicle
     {
         public float CurrentBatteryTime { get; set; }
         public float MaxBatteryTime { get; set; }
+
+        public ElectricityVehicle() : base()
+        {
+
+        }
+
 
         public ElectricityVehicle(string i_ModelName, float i_CurrentEnergy)
             : base(i_ModelName, i_CurrentEnergy)
