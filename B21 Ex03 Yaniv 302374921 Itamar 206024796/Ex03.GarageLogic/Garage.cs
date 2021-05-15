@@ -14,7 +14,7 @@ namespace Ex03.GarageLogic
         private readonly Assembly r_Assembly;
         private readonly Dictionary<string, Type> r_VehiclesTypes;
 
-        public List<string> AvailableVehicles { get; private set; }
+        public List<string> AvailableVehiclesWithoutSpaces { get; private set; }
 
         public Garage()
         {
@@ -27,7 +27,7 @@ namespace Ex03.GarageLogic
 
         private void initAvailableVehicles() // TODO: Move to different class
         {
-            AvailableVehicles = new List<string>();
+            AvailableVehiclesWithoutSpaces = new List<string>();
 
             foreach (Type classType in r_Assembly.GetTypes())
             {
@@ -35,7 +35,7 @@ namespace Ex03.GarageLogic
                 {
                     var dummy = Activator.CreateInstance(classType);
                     var classTypeName = classType.GetMethod("GetCalssModelName").Invoke(dummy, null).ToString();
-                    AvailableVehicles.Add(classTypeName);
+                    AvailableVehiclesWithoutSpaces.Add(classTypeName);
                     r_VehiclesTypes.Add(classTypeName, classType);
                 }
             }
@@ -43,7 +43,7 @@ namespace Ex03.GarageLogic
 
         public void AddVehicle(string i_LicenseNumber, string i_Vehicle, float i_CurrentEnergy)
         {
-            if (!AvailableVehicles.Contains(i_Vehicle))
+            if (!AvailableVehiclesWithoutSpaces.Contains(i_Vehicle))
             {
                 throw new FormatException("The requested type is not a vehicle");
             }
