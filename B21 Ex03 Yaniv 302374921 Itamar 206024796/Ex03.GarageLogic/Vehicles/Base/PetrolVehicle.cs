@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Ex03.GarageLogic
@@ -18,12 +19,13 @@ namespace Ex03.GarageLogic
 
         public void Refuel(float i_FuelAmount, eFuelType i_FuelType)
         {
-            if ((i_FuelType != FuelType) || (i_FuelAmount < 0) ||
-                (CurrentFuelAmount + i_FuelAmount > MaxFuelAmount))
+            if (i_FuelAmount < 0 || CurrentFuelAmount + i_FuelAmount > MaxFuelAmount)
             {
-                ValueOutOfRangeException ex = new ValueOutOfRangeException();
-                ex.MaxValue = MaxFuelAmount;
-                throw ex;
+                throw new ValueOutOfRangeException(MaxFuelAmount);
+            }
+            if (i_FuelType != FuelType)
+            {
+                throw new ArgumentException();
             }
 
             CurrentFuelAmount += i_FuelAmount;

@@ -63,10 +63,7 @@ namespace Ex03.GarageLogic
 
             if (float.TryParse(i_PropertiesToCastAndFill[3], out float energyPercentage))
             {
-                foreach (Wheel wheel in Wheels)
-                {
-                    wheel.CurrentAirPressure = wheelsAirPressure;
-                }
+                EnergyPercentage = energyPercentage;
             }
             else
             {

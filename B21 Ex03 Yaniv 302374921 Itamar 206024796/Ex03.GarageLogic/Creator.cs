@@ -24,6 +24,4 @@ namespace Ex03.GarageLogic
             return Activator.CreateInstance(m_VehiclesTypes[i_Vehicle]) as Vehicle;
         }
     }
-
-
 }

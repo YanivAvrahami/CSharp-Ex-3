@@ -18,9 +18,7 @@ namespace Ex03.GarageLogic
         {
             if ((i_ChargeAmount < 0) || (CurrentBatteryTime + i_ChargeAmount > MaxBatteryTime))
             {
-                ValueOutOfRangeException ex = new ValueOutOfRangeException();
-                ex.MaxValue = MaxBatteryTime;
-                throw ex;
+                throw new ValueOutOfRangeException(MaxBatteryTime);
             }
 
             CurrentBatteryTime += i_ChargeAmount;
@@ -31,7 +29,7 @@ namespace Ex03.GarageLogic
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine($"Fuel: {CurrentBatteryTime} of {MaxBatteryTime}");
+            stringBuilder.AppendLine($"Battery: {CurrentBatteryTime} of {MaxBatteryTime}");
 
             return stringBuilder.ToString();
         }
@@ -40,7 +38,7 @@ namespace Ex03.GarageLogic
         {
             base.InitializeProperites(i_PropertiesToCastAndFill);
 
-            CurrentBatteryTime = EnergyPercentage * MaxBatteryTime / 100;
+            CurrentBatteryTime = EnergyPercentage * MaxBatteryTime / 100f;
         }
     }
 }

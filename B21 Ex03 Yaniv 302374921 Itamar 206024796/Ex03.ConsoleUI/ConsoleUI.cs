@@ -213,35 +213,35 @@ namespace Ex03.ConsoleUI
 
         private eVehicleState userInputGetFilterState()
         {
-            Console.Write("Filter by tags:");
+            Console.WriteLine("Filter by tags:");
 
             return userInputGetEnumTypeOption<eVehicleState>();
         }
 
         private eFuelType userInputGetFuelType()
         {
-            Console.Write("Fuel Types:");
+            Console.WriteLine("Fuel Types:");
 
             return userInputGetEnumTypeOption<eFuelType>();
         }
 
         private eVehicleState userInputVehicleState()
         {
-            Console.Write("Choose state:");
+            Console.WriteLine("Choose state:");
 
             return userInputGetEnumTypeOption<eVehicleState>();
         }
 
         private float userInputBatteryChargeTime()
         {
-            Console.Write("Enter Charging time in minutes:");
+            Console.Write("Enter Charging time in minutes: ");
 
             return userInputIncreaseEnergy();
         }
 
         private float userInputRefuelAmount()
         {
-            Console.Write("Enter fuel amount:");
+            Console.Write("Enter fuel amount: ");
 
             return userInputIncreaseEnergy();
         }
@@ -279,10 +279,10 @@ namespace Ex03.ConsoleUI
             }
             while(!(1 <= typeChoosen && typeChoosen <= Enum.GetNames(typeof(T)).Length));
 
-            return (T)Enum.Parse(typeof(T), inputStr);
+            return (T)Enum.Parse(typeof(T), (typeChoosen - 1).ToString());
         }
 
-        private string getEnumAsStringOptions<T>() // TODO: move to logic
+        private string getEnumAsStringOptions<T>() // TODO: move to UI logic
         {
             StringBuilder enumTypesStrBuilder = new StringBuilder();
             int index = 1;

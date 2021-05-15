@@ -36,7 +36,7 @@ namespace Ex03.GarageLogic
                 throw new FormatException("Problem parsing the string to value...");
             }
 
-            if (float.TryParse(i_PropertiesToCastAndFill[0], out float maxCarry))
+            if (float.TryParse(i_PropertiesToCastAndFill[1], out float maxCarry))
             {
                 MaxCarry = maxCarry;
             }
