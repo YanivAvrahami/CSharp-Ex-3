@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -18,11 +20,6 @@ namespace Ex03.GarageLogic
 
         }
 
-        public override string GetCalssModelName()
-        {
-            return "Electric Car";
-        }
-
         public override string GetInformationAboutVehicleAsString()
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -32,5 +29,21 @@ namespace Ex03.GarageLogic
 
             return stringBuilder.ToString();
         }
+
+        public override List<string> PropertiesNeededToFillForTheSpecificVehicle()
+        {
+            List<string> listOfProperties = new List<string>();
+
+            listOfProperties.Add("color");
+            listOfProperties.Add("doors");
+
+            return listOfProperties;
+        }
+
+        public override void InitializeProperites(List<string> i_PropertiesToCastAndFill)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

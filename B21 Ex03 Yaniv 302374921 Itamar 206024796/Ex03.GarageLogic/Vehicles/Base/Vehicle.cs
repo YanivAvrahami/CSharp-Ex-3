@@ -20,8 +20,10 @@ namespace Ex03.GarageLogic
             EnergyPercentage = i_CurrentEnergy;
         }
 
-        public abstract string GetCalssModelName();
-
         public abstract string GetInformationAboutVehicleAsString();
+
+        public abstract List<string> PropertiesNeededToFillForTheSpecificVehicle();
+
+        public abstract void InitializeProperites(List<string> i_PropertiesToCastAndFill);
     }
 }
