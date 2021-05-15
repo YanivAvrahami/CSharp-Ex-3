@@ -6,8 +6,22 @@ namespace Ex03.GarageLogic
 {
     class RegularCar : PetrolVehicle
     {
+        private int m_Doors;
+
         public eColor Color { get; private set; }
-        public int Doors { get; private set; }
+        public int Doors
+        {
+            get { return m_Doors; }
+            set
+            {
+                if (!(2 <= value && value <= 5))
+                {
+                    throw new ValueOutOfRangeException(2, 5);
+                }
+                
+                m_Doors = value;
+            }
+        }
 
         public RegularCar()
             : base(4, 32f, eFuelType.Octan95, 45f)
@@ -16,12 +30,12 @@ namespace Ex03.GarageLogic
 
         public override string GetVehicleInfo()
         {
-            StringBuilder stringBuilder = new StringBuilder(base.GetVehicleInfo());
+            StringBuilder infoStrBuilder = new StringBuilder(base.GetVehicleInfo());
 
-            stringBuilder.AppendLine($"Color: {Color}");
-            stringBuilder.AppendLine($"Number of doors: {Doors}");
+            infoStrBuilder.AppendLine($"Color: {Color}");
+            infoStrBuilder.AppendLine($"Number of doors: {Doors}");
 
-            return stringBuilder.ToString();
+            return infoStrBuilder.ToString();
         }
 
         public override List<string> PropertiesNeededToFillForTheSpecificVehicle()

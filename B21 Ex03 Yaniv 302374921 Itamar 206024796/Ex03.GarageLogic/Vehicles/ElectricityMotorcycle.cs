@@ -16,12 +16,12 @@ namespace Ex03.GarageLogic
 
         public override string GetVehicleInfo()
         {
-            StringBuilder stringBuilder = new StringBuilder(base.GetVehicleInfo());
+            StringBuilder infoStrBuilder = new StringBuilder(base.GetVehicleInfo());
 
-            stringBuilder.AppendLine($"License: {License}");
-            stringBuilder.AppendLine($"Engine Volume: {EngineVolume}");
+            infoStrBuilder.AppendLine($"License: {License}");
+            infoStrBuilder.AppendLine($"Engine Volume: {EngineVolume}");
 
-            return stringBuilder.ToString();
+            return infoStrBuilder.ToString();
         }
 
         public override List<string> PropertiesNeededToFillForTheSpecificVehicle()

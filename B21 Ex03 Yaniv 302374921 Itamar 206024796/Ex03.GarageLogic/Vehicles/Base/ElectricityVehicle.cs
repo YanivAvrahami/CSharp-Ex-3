@@ -5,7 +5,20 @@ namespace Ex03.GarageLogic
 {
     abstract class ElectricityVehicle : Vehicle
     {
-        public float CurrentBatteryTime { get; set; }
+        private float m_CurrentBatteryTime;
+        public float CurrentBatteryTime
+        {
+            get { return m_CurrentBatteryTime; }
+            private set
+            {
+                if (!(0 <= value && value <= MaxBatteryTime))
+                {
+                    throw new ValueOutOfRangeException(MaxBatteryTime);
+                }
+
+                m_CurrentBatteryTime = value;
+            }
+        }
         public float MaxBatteryTime { get; }
 
         public ElectricityVehicle(int i_NumberOfWheels, float i_MaxAirPressure, float i_MaxBatteryTime)
@@ -16,22 +29,17 @@ namespace Ex03.GarageLogic
 
         public void ChargeBattery(float i_ChargeAmount)
         {
-            if ((i_ChargeAmount < 0) || (CurrentBatteryTime + i_ChargeAmount > MaxBatteryTime))
-            {
-                throw new ValueOutOfRangeException(MaxBatteryTime);
-            }
-
             CurrentBatteryTime += i_ChargeAmount;
             EnergyPercentage = CurrentBatteryTime / MaxBatteryTime * 100;
         }
 
         public override string GetVehicleInfo()
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder infoStrBuilder = new StringBuilder(base.GetVehicleInfo());
 
-            stringBuilder.AppendLine($"Battery: {CurrentBatteryTime} of {MaxBatteryTime}");
+            infoStrBuilder.AppendLine($"Battery: {CurrentBatteryTime} of {MaxBatteryTime}");
 
-            return stringBuilder.ToString();
+            return infoStrBuilder.ToString();
         }
 
         public override void InitializeProperites(List<string> i_PropertiesToCastAndFill)

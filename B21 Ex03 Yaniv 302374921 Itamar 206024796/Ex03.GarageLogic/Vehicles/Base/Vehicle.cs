@@ -1,13 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
     abstract class Vehicle
     {
+        private float m_EnergyPercentage;
         public string ModelName { get; set; }
         public string LicenseNumber { get; set; }
-        public float EnergyPercentage { get; set; }
+        public float EnergyPercentage
+        {
+            get { return m_EnergyPercentage; }
+            set
+            {
+                if (!(0f <= value && value <= 100f))
+                {
+                    throw new ValueOutOfRangeException(0, 100);
+                }
+
+                m_EnergyPercentage = value;
+            }
+        }
         public List<Wheel> Wheels { get; set; }
 
         public Vehicle(int i_NumberOfWheels, float i_MaxAirPressure)
@@ -20,7 +34,17 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public abstract string GetVehicleInfo();
+        public virtual string GetVehicleInfo()
+        {
+            StringBuilder infoStrBuilder = new StringBuilder();
+
+            infoStrBuilder.AppendLine($"License number: {LicenseNumber}");
+            infoStrBuilder.AppendLine($"Model Name: {ModelName}");
+            infoStrBuilder.AppendLine($"Wheel Air Pressure: {Wheels[0].CurrentAirPressure}");
+            infoStrBuilder.AppendLine($"Wheel Max Pressure: {Wheels[0].MaxAirPressure}");
+
+            return infoStrBuilder.ToString();
+        }
 
         public virtual List<string> PropertiesNeededToFillForTheSpecificVehicle()
         {

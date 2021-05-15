@@ -6,8 +6,21 @@ namespace Ex03.GarageLogic
 {
     abstract class PetrolVehicle : Vehicle
     {
+        private float m_CurrentFuelAmount;
         public eFuelType FuelType { get; }
-        public float CurrentFuelAmount { get; set; }
+        public float CurrentFuelAmount
+        {
+            get { return m_CurrentFuelAmount; }
+            set
+            {
+                if (!(0 <= value && value <= MaxFuelAmount))
+                {
+                    throw new ValueOutOfRangeException(MaxFuelAmount);
+                }
+
+                m_CurrentFuelAmount = value;
+            }
+        }
         public float MaxFuelAmount { get; }
 
         public PetrolVehicle(int i_NumberOfWheels, float i_MaxAirPressure, eFuelType i_FuelType, float i_MaxFuelAmount)
@@ -34,12 +47,12 @@ namespace Ex03.GarageLogic
 
         public override string GetVehicleInfo()
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder infoStrBuilder = new StringBuilder(base.GetVehicleInfo());
 
-            stringBuilder.AppendLine($"FuelType: {FuelType}");
-            stringBuilder.AppendLine($"Fuel: {CurrentFuelAmount} of {MaxFuelAmount}");
+            infoStrBuilder.AppendLine($"FuelType: {FuelType}");
+            infoStrBuilder.AppendLine($"Fuel: {CurrentFuelAmount} of {MaxFuelAmount}");
 
-            return stringBuilder.ToString();
+            return infoStrBuilder.ToString();
         }
 
         public override void InitializeProperites(List<string> i_PropertiesToCastAndFill)
