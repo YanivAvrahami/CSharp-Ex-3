@@ -1,4 +1,6 @@
-﻿namespace Ex03.GarageLogic
+﻿using System.Collections.Generic;
+
+namespace Ex03.GarageLogic
 {
     class Truck : PetrolVehicle
     {
@@ -16,9 +18,14 @@
 
         }
 
-        public override string GetCalssModelName()
+        public override List<string> PropertiesNeededToFillForTheSpecificVehicle()
         {
-            return "Truck";
+            throw new System.NotImplementedException();
+        }
+
+        public override void InitializeProperites(List<string> i_PropertiesToCastAndFill)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -11,39 +11,21 @@ namespace Ex03.GarageLogic
     public class Garage
     {
         private readonly CustomerBook r_CustomerBook;
-        private readonly Assembly r_Assembly;
-        private readonly Dictionary<string, Type> r_VehiclesTypes;
+        private readonly Creator r_VehicleCreator;
 
-        public List<string> AvailableVehicles { get; private set; }
+        public List<string> AvailableVehiclesWithoutSpaces { get; private set; }
 
         public Garage()
         {
-            r_Assembly = Assembly.GetExecutingAssembly();
             r_CustomerBook = new CustomerBook();
+            r_VehicleCreator = new Creator();
 
-            r_VehiclesTypes = new Dictionary<string, Type>();
-            initAvailableVehicles();
+            AvailableVehiclesWithoutSpaces = r_VehicleCreator.AvailableVehicles;
         }
 
-        private void initAvailableVehicles() // TODO: Move to different class
+        public void AddVehicle(string i_LicenseNumber, string i_VehicleNameStr, float i_CurrentEnergy)
         {
-            AvailableVehicles = new List<string>();
-
-            foreach (Type classType in r_Assembly.GetTypes())
-            {
-                if (classType.IsSubclassOf(typeof(Vehicle)) && !classType.IsAbstract)
-                {
-                    var dummy = Activator.CreateInstance(classType);
-                    var classTypeName = classType.GetMethod("GetCalssModelName").Invoke(dummy, null).ToString();
-                    AvailableVehicles.Add(classTypeName);
-                    r_VehiclesTypes.Add(classTypeName, classType);
-                }
-            }
-        }
-
-        public void AddVehicle(string i_LicenseNumber, string i_Vehicle, float i_CurrentEnergy)
-        {
-            if (!AvailableVehicles.Contains(i_Vehicle))
+            if (!AvailableVehiclesWithoutSpaces.Contains(i_VehicleNameStr))
             {
                 throw new FormatException("The requested type is not a vehicle");
             }
@@ -56,11 +38,16 @@ namespace Ex03.GarageLogic
             }
 
             CustomerTicket customerTicket = new CustomerTicket();
-            customerTicket.Vehicle = (Vehicle)Activator.CreateInstance(r_VehiclesTypes[i_Vehicle]);
+            customerTicket.Vehicle = r_VehicleCreator.CreateNewVehicle(i_VehicleNameStr);
             customerTicket.VehicleState = eVehicleState.InRepair;
             customerTicket.Vehicle.LicenseNumber = i_LicenseNumber;
 
             r_CustomerBook.AddCustomer(customerTicket);
+        }
+
+        public List<string> GetPropertiesByLicense(string i_LicenseNumber)
+        {
+            return r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle.PropertiesNeededToFillForTheSpecificVehicle();
         }
 
         public List<string> GetLicensesByState(bool i_ConsiderState, eVehicleState i_VehicleState)
@@ -79,6 +66,7 @@ namespace Ex03.GarageLogic
 
             return vehicles;
         }
+
         public void ChangeVehicleState(string i_LicenseNumber, eVehicleState i_NewVehicleState)
         {
             r_CustomerBook.GetCustomer(i_LicenseNumber).VehicleState = i_NewVehicleState;

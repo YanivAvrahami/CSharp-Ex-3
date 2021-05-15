@@ -35,16 +35,18 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Utils\AssemblyUtils.cs" />
     <Compile Include="Commands\CreateNewVehicleCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="CustomerBook.cs" />
-    <Compile Include="CustomerTicket.cs" />
+    <Compile Include="Creator.cs" />
+    <Compile Include="Customers\CustomerBook.cs" />
+    <Compile Include="Customers\CustomerTicket.cs" />
     <Compile Include="enums\eColor.cs" />
     <Compile Include="enums\eFuelType.cs" />
     <Compile Include="enums\eLicense.cs" />
     <Compile Include="enums\eVehicleState.cs" />
+    <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
     <Compile Include="Garage.cs" />
-    <Compile Include="ValueOutOfRangeException.cs" />
     <Compile Include="Vehicles\Base\ElectricityVehicle.cs" />
     <Compile Include="Vehicles\Base\PetrolVehicle.cs" />
     <Compile Include="Vehicles\Base\Vehicle.cs" />
@@ -53,7 +55,7 @@
     <Compile Include="Vehicles\RegularCar.cs" />
     <Compile Include="Vehicles\RegularMotorcycle.cs" />
     <Compile Include="Vehicles\Truck.cs" />
-    <Compile Include="Wheel.cs" />
+    <Compile Include="Vehicles\Components\Wheel.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
