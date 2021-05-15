@@ -61,7 +61,6 @@ namespace Ex03.GarageLogic
         public virtual void InitializeProperites(List<string> i_PropertiesToCastAndFill)
         {
             // TODO: Move to different methods OR setters?
-            // CHANGE LIST TO QUEUE
 
             if (float.TryParse(i_PropertiesToCastAndFill[0], out float wheelsAirPressure))
             {
@@ -83,7 +82,6 @@ namespace Ex03.GarageLogic
 
             string modelName = i_PropertiesToCastAndFill[2];
             ModelName = modelName;
-
 
             if (float.TryParse(i_PropertiesToCastAndFill[3], out float energyPercentage))
             {

@@ -30,14 +30,28 @@ namespace Ex03.ConsoleUI
                 {
                     renderMainMenu();
                     handleMenuMenuChoice();
-                    Console.Clear();
                 }
-                catch(Exception e)
+                catch (ValueOutOfRangeException e)
                 {
-                    Console.WriteLine(e);
-                    throw;
+                    Console.WriteLine(e.Message);
                 }
-                
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+                if (IsRunning)
+                {
+                    pause();
+                }
             }
         }
 
@@ -54,7 +68,7 @@ namespace Ex03.ConsoleUI
                 goodInput = int.TryParse(inputKeyPressed, out keyPressed);
             }
 
-            switch(keyPressed)
+            switch(keyPressed) // TODO: move to another method
             {
                 case 1:
                     addVehicle();
@@ -81,11 +95,6 @@ namespace Ex03.ConsoleUI
                     exit();
                     break;
             }
-
-            if(keyPressed != MainMenuButtonLabels.Count)
-            {
-                pause();
-            }
         }
 
         private void addVehicle()
@@ -106,8 +115,16 @@ namespace Ex03.ConsoleUI
                 string propertyInput = Console.ReadLine();
                 propertyList.Add(propertyInput);
             }
-                        
-            Garage.SetVehiclePropertiesByLicense(licenseInput, propertyList);
+
+            try
+            {
+                Garage.SetVehiclePropertiesByLicense(licenseInput, propertyList);
+            }
+            catch
+            {
+                Garage.RemoveVehicle(licenseInput);
+                throw;
+            }
 
             string fullNameInput = ConsoleUIHelper.GetString("Enter ower fullname: ");
             string phoneNumberInput = ConsoleUIHelper.GetString("Enter phone number: ");
@@ -148,12 +165,14 @@ namespace Ex03.ConsoleUI
         {
             string licenseNumberString = userInputGetExistLicenseWithMessage();
             eVehicleState stateTypeChoosen = userInputVehicleState();
+
             Garage.ChangeVehicleState(licenseNumberString, stateTypeChoosen);
         }
 
         private void inflateVehicleWheelsToMax()
         {
             string licenseNumberString = userInputGetExistLicenseWithMessage();
+
             Garage.InflateVehicleWheelsToMax(licenseNumberString);
         }
 
@@ -208,6 +227,8 @@ namespace Ex03.ConsoleUI
 
         private void renderMainMenu()
         {
+            Console.Clear();
+
             Console.WriteLine("Garage Menu:");
             Console.WriteLine("------------");
             foreach(string mainMenuButtonLabel in MainMenuButtonLabels)

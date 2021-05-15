@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -10,11 +8,12 @@ namespace Ex03.GarageLogic
         public float MinValue { get; set; }
 
         public ValueOutOfRangeException(float i_MaxValue)
+            : this(0, i_MaxValue)
         {
-            MaxValue = i_MaxValue;
-            MinValue = 0;
         }
+
         public ValueOutOfRangeException(float i_MinValue, float i_MaxValue)
+            : base("The value range is: " + i_MinValue + " - " + i_MaxValue)
         {
             MaxValue = i_MaxValue;
             MinValue = i_MinValue;
