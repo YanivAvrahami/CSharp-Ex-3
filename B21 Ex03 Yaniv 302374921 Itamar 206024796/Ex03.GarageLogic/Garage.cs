@@ -52,6 +52,14 @@ namespace Ex03.GarageLogic
             r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle.InitializeProperites(i_listOfProperties);
         }
 
+        public void UpdateCustomer(string i_LicenseNumber, string i_FullName, string i_PhoneNumber)
+        {
+            CustomerTicket customer =  r_CustomerBook.GetCustomer(i_LicenseNumber);
+
+            customer.FullName = i_FullName;
+            customer.PhoneNumber = i_PhoneNumber;
+        }
+
         public List<string> GetLicensesByState(bool i_ConsiderState, eVehicleState i_VehicleState)
         {
             List<string> vehicles = new List<string>();

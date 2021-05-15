@@ -2,7 +2,7 @@
 {
     public class Wheel
     {
-        public string ManifactureName { get; }
+        public string ManifactureName { get; set; }
         public float CurrentAirPressure { get; set; }
         public float MaxAirPressure { get; }
 

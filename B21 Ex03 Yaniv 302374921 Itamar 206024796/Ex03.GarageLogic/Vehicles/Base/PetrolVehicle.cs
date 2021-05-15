@@ -1,12 +1,13 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
     abstract class PetrolVehicle : Vehicle
     {
-        public eFuelType FuelType { get; set; }
+        public eFuelType FuelType { get; }
         public float CurrentFuelAmount { get; set; }
-        public float MaxFuelAmount { get; set; }
+        public float MaxFuelAmount { get; }
 
         public PetrolVehicle(int i_NumberOfWheels, float i_MaxAirPressure, eFuelType i_FuelType, float i_MaxFuelAmount)
             : base(i_NumberOfWheels, i_MaxAirPressure)
@@ -26,9 +27,10 @@ namespace Ex03.GarageLogic
             }
 
             CurrentFuelAmount += i_FuelAmount;
+            EnergyPercentage = CurrentFuelAmount / MaxFuelAmount * 100;
         }
 
-        public override string GetInformationAboutVehicleAsString()
+        public override string GetVehicleInfo()
         {
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -36,6 +38,13 @@ namespace Ex03.GarageLogic
             stringBuilder.AppendLine($"Fuel: {CurrentFuelAmount} of {MaxFuelAmount}");
 
             return stringBuilder.ToString();
+        }
+
+        public override void InitializeProperites(List<string> i_PropertiesToCastAndFill)
+        {
+            base.InitializeProperites(i_PropertiesToCastAndFill);
+
+            CurrentFuelAmount = EnergyPercentage * MaxFuelAmount / 100;
         }
     }
 }

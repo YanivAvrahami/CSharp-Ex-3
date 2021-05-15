@@ -40,7 +40,7 @@ namespace Ex03.GarageLogic
             customerInfoStr.AppendLine($"Vehicle State: {customer.VehicleState}");
             customerInfoStr.AppendLine($"Wheel Air Pressure: {vehicle.Wheels[0].CurrentAirPressure}");
             customerInfoStr.AppendLine($"Wheel Max Pressure: {vehicle.Wheels[0].MaxAirPressure}");
-            customerInfoStr.AppendLine(vehicle.GetInformationAboutVehicleAsString());
+            customerInfoStr.AppendLine(vehicle.GetVehicleInfo());
 
             return customerInfoStr.ToString();
         }

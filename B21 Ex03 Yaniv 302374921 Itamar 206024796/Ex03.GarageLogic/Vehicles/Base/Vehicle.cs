@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
@@ -19,10 +20,60 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public abstract string GetInformationAboutVehicleAsString();
+        public abstract string GetVehicleInfo();
 
-        public abstract List<string> PropertiesNeededToFillForTheSpecificVehicle();
+        public virtual List<string> PropertiesNeededToFillForTheSpecificVehicle()
+        {
+            List<string> propertiesToFill = new List<string>();
 
-        public abstract void InitializeProperites(List<string> i_PropertiesToCastAndFill);
+            propertiesToFill.Add("wheels Air Pressure");
+            propertiesToFill.Add("wheels Manifacture");
+            propertiesToFill.Add("Model Name");
+            propertiesToFill.Add("Energy Percentage");
+
+            return propertiesToFill;
+        }
+
+        public virtual void InitializeProperites(List<string> i_PropertiesToCastAndFill)
+        {
+            // TODO: Move to different methods OR setters?
+            // CHANGE LIST TO QUEUE
+
+            if (float.TryParse(i_PropertiesToCastAndFill[0], out float wheelsAirPressure))
+            {
+                foreach (Wheel wheel in Wheels)
+                {
+                    wheel.CurrentAirPressure = wheelsAirPressure;
+                }
+            }
+            else
+            {
+                throw new FormatException("Problem parsing the string to value...");
+            }
+
+            string wheelsManifacture = i_PropertiesToCastAndFill[1];
+            foreach (Wheel wheel in Wheels)
+            {
+                wheel.ManifactureName = wheelsManifacture;
+            }
+
+            string modelName = i_PropertiesToCastAndFill[2];
+            ModelName = modelName;
+
+
+            if (float.TryParse(i_PropertiesToCastAndFill[3], out float energyPercentage))
+            {
+                foreach (Wheel wheel in Wheels)
+                {
+                    wheel.CurrentAirPressure = wheelsAirPressure;
+                }
+            }
+            else
+            {
+                throw new FormatException("Problem parsing the string to value...");
+            }
+
+            i_PropertiesToCastAndFill.RemoveRange(0, 4);
+        }
     }
 }
