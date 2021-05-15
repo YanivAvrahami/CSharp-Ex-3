@@ -23,7 +23,9 @@ namespace Ex03.GarageLogic
         {
             if ((i_ChargeAmount < 0) || (CurrentBatteryTime + i_ChargeAmount > MaxBatteryTime))
             {
-                //TODO: throw exception?
+                ValueOutOfRangeException ex = new ValueOutOfRangeException();
+                ex.MaxValue = MaxBatteryTime;
+                throw ex;
             }
 
             CurrentBatteryTime += i_ChargeAmount;

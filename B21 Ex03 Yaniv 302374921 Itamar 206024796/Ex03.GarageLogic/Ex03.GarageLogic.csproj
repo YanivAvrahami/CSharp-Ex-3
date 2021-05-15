@@ -44,6 +44,7 @@
     <Compile Include="enums\eLicense.cs" />
     <Compile Include="enums\eVehicleState.cs" />
     <Compile Include="Garage.cs" />
+    <Compile Include="ValueOutOfRangeException.cs" />
     <Compile Include="Vehicles\Base\ElectricityVehicle.cs" />
     <Compile Include="Vehicles\Base\PetrolVehicle.cs" />
     <Compile Include="Vehicles\Base\Vehicle.cs" />

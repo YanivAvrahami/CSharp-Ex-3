@@ -92,9 +92,12 @@ namespace Ex03.ConsoleUI
             }
 
             string userInputStr = Console.ReadLine();
-            int vehicleType = int.Parse(userInputStr);
+            int vehicleType = int.Parse(userInputStr); // TODO: Check for valid input
 
-            Garage.AddVehicle(licenseNumberString, Garage.AvailableVehicles[vehicleType - 1]);
+            userInputStr = Console.ReadLine();
+            float vehicleEnergyPercentage = float.Parse(userInputStr); // TODO: Check for valid input
+
+            Garage.AddVehicle(licenseNumberString, Garage.AvailableVehicles[vehicleType - 1], vehicleEnergyPercentage);
         }
 
         private void displayAllLicensePlates()

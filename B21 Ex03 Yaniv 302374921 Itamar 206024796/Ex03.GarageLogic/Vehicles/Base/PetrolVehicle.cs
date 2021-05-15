@@ -21,11 +21,12 @@ namespace Ex03.GarageLogic
 
         public void Refuel(float i_FuelAmount, eFuelType i_FuelType)
         {
-            if ((i_FuelType != FuelType) || 
-                (i_FuelAmount < 0) ||
+            if ((i_FuelType != FuelType) || (i_FuelAmount < 0) ||
                 (CurrentFuelAmount + i_FuelAmount > MaxFuelAmount))
             {
-                // TODO: throw exception?
+                ValueOutOfRangeException ex = new ValueOutOfRangeException();
+                ex.MaxValue = MaxFuelAmount;
+                throw ex;
             }
 
             CurrentFuelAmount += i_FuelAmount;
