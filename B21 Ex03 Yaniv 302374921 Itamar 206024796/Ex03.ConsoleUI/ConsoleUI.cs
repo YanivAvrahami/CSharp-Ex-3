@@ -26,9 +26,18 @@ namespace Ex03.ConsoleUI
         {
             while(IsRunning)
             {
-                renderMainMenu();
-                handleMenuMenuChoice();
-                Console.Clear();
+                try
+                {
+                    renderMainMenu();
+                    handleMenuMenuChoice();
+                    Console.Clear();
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                
             }
         }
 
@@ -108,9 +117,19 @@ namespace Ex03.ConsoleUI
 
         private void displayAllLicenseNumbers()
         {
-            Console.Write("Filter license numbers? (y/n):");
-            ConsoleKey keyPressed = Console.ReadKey().Key;
-            bool isLicenseNumbersFiltered = keyPressed == ConsoleKey.Y;
+            Console.WriteLine("Filter license numbers? (y/n):");
+
+            string yesOrNoInput = Console.ReadLine();
+            bool isLicenseNumbersFiltered = false;
+
+            if(yesOrNoInput == "y")
+            {
+                isLicenseNumbersFiltered = true;
+            }
+            else
+            {
+                isLicenseNumbersFiltered = false;
+            }
 
             eVehicleState stateTypeChoosen = eVehicleState.InRepair;
             if(isLicenseNumbersFiltered)
@@ -196,6 +215,8 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine(mainMenuButtonLabel);
             }
         }
+
+
 
         private string userInputGetExistLicense()
         {
