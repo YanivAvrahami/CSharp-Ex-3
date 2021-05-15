@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Services;
 using System.Text;
 using Ex03.GarageLogic;
 
@@ -75,36 +76,30 @@ namespace Ex03.ConsoleUI
             Console.Write("Enter license number: ");
             string licenseInput = Console.ReadLine();
 
-            Console.Write("Enter energy percentage: ");
-            string energyInput = Console.ReadLine();
-
             printListWithIndex(Garage.AvailableVehiclesWithoutSpaces);
-            ConsoleKey keyPressed = Console.ReadKey().Key;
 
-            Garage.AddVehicle(licenseInput, Garage.AvailableVehiclesWithoutSpaces[0]);
+            string vehicleTypeInput = Console.ReadLine(); //TODO: check valid number
+            int vehicleTypeIndex = int.Parse(vehicleTypeInput);
 
-            List<string> listOfParameters = new List<string>();
-            switch(keyPressed)
+            Garage.AddVehicle(licenseInput, Garage.AvailableVehiclesWithoutSpaces[vehicleTypeIndex - 1]);
+
+            List<string> propertyList = new List<string>();
+            foreach(string propertyStr in Garage.GetVehiclePropertiesByLicense(licenseInput))
             {
-                case ConsoleKey.D1:
-                    
-                    break;
-                case ConsoleKey.D2:
-
-                    break;
-                case ConsoleKey.D3:
-
-                    break;
-                case ConsoleKey.D4:
-
-                    break;
-                case ConsoleKey.D5:
-                    
-                    break;
+                Console.WriteLine(propertyStr + ": ");
+                string propertyInput = Console.ReadLine();
+                propertyList.Add(propertyInput);
             }
+                        
+            Garage.SetVehiclePropertiesByLicense(licenseInput, propertyList);
 
-            
-            
+            Console.WriteLine("Enter ower fullname: ");
+            string fullnameInput = Console.ReadLine();
+
+            Console.WriteLine("Enter phone number: ");
+            string phoneNumberInput = Console.ReadLine();
+
+            Garage.UpdateCustomer(licenseInput, fullnameInput, phoneNumberInput);
         }
 
         private void displayAllLicenseNumbers()
