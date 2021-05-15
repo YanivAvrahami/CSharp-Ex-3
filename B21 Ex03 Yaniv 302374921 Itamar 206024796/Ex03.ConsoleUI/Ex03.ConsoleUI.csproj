@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleUI.cs" />
+    <Compile Include="ConsoleUIHelper.cs" />
     <Compile Include="FactoryMenus.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
