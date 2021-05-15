@@ -8,15 +8,9 @@ namespace Ex03.GarageLogic
         public eColor Color { get; set; }
         public int Doors { get; set; }
 
-        public RegularCar() : base()
+        public RegularCar()
+            : base(4, 32f, eFuelType.Octan95, 45f)
         {
-
-        }
-
-        public RegularCar(string i_ModelName, float i_CurrentEnergy)
-            : base(i_ModelName, i_CurrentEnergy)
-        {
-
         }
 
         public override string GetInformationAboutVehicleAsString()

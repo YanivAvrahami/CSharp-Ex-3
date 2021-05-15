@@ -9,15 +9,14 @@ namespace Ex03.GarageLogic
         public float EnergyPercentage { get; set; }
         public List<Wheel> Wheels { get; set; }
 
-        public Vehicle()
+        public Vehicle(int i_NumberOfWheels, float i_MaxAirPressure)
         {
+            Wheels = new List<Wheel>();
 
-        }
-
-        public Vehicle(string i_ModelName, float i_CurrentEnergy)
-        {
-            ModelName = i_ModelName;
-            EnergyPercentage = i_CurrentEnergy;
+            for (int i = 0; i < i_NumberOfWheels; i++)
+            {
+                Wheels.Add(new Wheel(i_MaxAirPressure));
+            }
         }
 
         public abstract string GetInformationAboutVehicleAsString();

@@ -8,15 +8,9 @@ namespace Ex03.GarageLogic
         public eLicense License { get; set; }
         public int EngineVolume { get; set; }
 
-        public ElectricityMotorcycle() : base()
+        public ElectricityMotorcycle()
+            : base(2, 30f, 1.8f)
         {
-
-        }
-
-        public ElectricityMotorcycle(string i_ModelName, float i_CurrentEnergy)
-            : base(i_ModelName, i_CurrentEnergy)
-        {
-
         }
 
         public override string GetInformationAboutVehicleAsString()

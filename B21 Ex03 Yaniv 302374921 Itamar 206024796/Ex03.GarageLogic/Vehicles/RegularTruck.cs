@@ -2,20 +2,14 @@
 
 namespace Ex03.GarageLogic
 {
-    class Truck : PetrolVehicle
+    class RegularTruck : PetrolVehicle
     {
         public bool HasHazardous { get; set; }
         public float MaxCarry { get; set; }
 
-        public Truck() : base()
+        public RegularTruck()
+            : base(16, 26f, eFuelType.Soler, 120f)
         {
-
-        }
-
-        public Truck(string i_ModelName, float i_CurrentEnergy)
-            : base(i_ModelName, i_CurrentEnergy)
-        {
-
         }
 
         public override List<string> PropertiesNeededToFillForTheSpecificVehicle()

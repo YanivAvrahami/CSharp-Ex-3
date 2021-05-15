@@ -6,11 +6,9 @@
         public float CurrentAirPressure { get; set; }
         public float MaxAirPressure { get; }
 
-        public Wheel(string i_ManifactureName, float i_MaxAirPressure)
+        public Wheel(float i_MaxAirPressure)
         {
-            ManifactureName = i_ManifactureName;
             MaxAirPressure = i_MaxAirPressure;
-            CurrentAirPressure = 0;
         }
 
         public void Inflate(float i_AirPressure)

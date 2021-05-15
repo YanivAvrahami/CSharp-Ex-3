@@ -8,15 +8,11 @@ namespace Ex03.GarageLogic
         public float CurrentFuelAmount { get; set; }
         public float MaxFuelAmount { get; set; }
 
-        public PetrolVehicle() : base()
+        public PetrolVehicle(int i_NumberOfWheels, float i_MaxAirPressure, eFuelType i_FuelType, float i_MaxFuelAmount)
+            : base(i_NumberOfWheels, i_MaxAirPressure)
         {
-
-        }
-
-        public PetrolVehicle(string i_ModelName, float i_CurrentEnergy)
-            : base(i_ModelName, i_CurrentEnergy)
-        {
-
+            FuelType = i_FuelType;
+            MaxFuelAmount = i_MaxFuelAmount;
         }
 
         public void Refuel(float i_FuelAmount, eFuelType i_FuelType)

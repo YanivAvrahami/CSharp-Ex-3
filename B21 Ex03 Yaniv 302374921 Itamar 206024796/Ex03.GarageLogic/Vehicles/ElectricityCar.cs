@@ -9,15 +9,9 @@ namespace Ex03.GarageLogic
         public eColor Color { get; set; }
         public int Doors { get; set; }
 
-        public ElectricityCar() : base()
+        public ElectricityCar()
+            : base(4, 32f, 3.2f)
         {
-
-        }
-
-        public ElectricityCar(string i_ModelName, float i_CurrentEnergy)
-            : base(i_ModelName, i_CurrentEnergy)
-        {
-
         }
 
         public override string GetInformationAboutVehicleAsString()

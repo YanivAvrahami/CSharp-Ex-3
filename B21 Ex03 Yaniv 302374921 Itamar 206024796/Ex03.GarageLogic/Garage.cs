@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
             AvailableVehiclesWithoutSpaces = r_VehicleCreator.AvailableVehicles;
         }
 
-        public void AddVehicle(string i_LicenseNumber, string i_VehicleNameStr, float i_CurrentEnergy)
+        public void AddVehicle(string i_LicenseNumber, string i_VehicleNameStr)
         {
             if (!AvailableVehiclesWithoutSpaces.Contains(i_VehicleNameStr))
             {

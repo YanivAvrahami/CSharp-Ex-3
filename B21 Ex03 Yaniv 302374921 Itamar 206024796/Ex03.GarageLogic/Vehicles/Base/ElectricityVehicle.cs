@@ -7,16 +7,10 @@ namespace Ex03.GarageLogic
         public float CurrentBatteryTime { get; set; }
         public float MaxBatteryTime { get; set; }
 
-        public ElectricityVehicle() : base()
+        public ElectricityVehicle(int i_NumberOfWheels, float i_MaxAirPressure, float i_MaxBatteryTime)
+            : base(i_NumberOfWheels, i_MaxAirPressure)
         {
-
-        }
-
-
-        public ElectricityVehicle(string i_ModelName, float i_CurrentEnergy)
-            : base(i_ModelName, i_CurrentEnergy)
-        {
-
+            MaxBatteryTime = i_MaxBatteryTime;
         }
 
         public void ChargeBattery(float i_ChargeAmount)
