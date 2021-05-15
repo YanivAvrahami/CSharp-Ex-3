@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Services;
 using System.Text;
 using Ex03.GarageLogic;
 
@@ -9,74 +7,83 @@ namespace Ex03.ConsoleUI
 {
     class ConsoleUI
     {
-        public string MenuString { get; set; }
-
         public bool IsRunning { get; set; }
 
         public Garage Garage { get; set; }
 
+        public List<string> MainMenuButtonLabels { get; set; }
+
         public ConsoleUI()
         {
+            IsRunning = true;
+
             Garage = new Garage();
-            MenuString = ConsoleUIHelper.CreateMenuString();
+
+            initializeMainMenuButtonLabels();
         }
 
         public void Run()
         {
-            IsRunning = true;
-
             while(IsRunning)
             {
-                renderMenu();
-                handleMenuChoice();
-
+                renderMainMenu();
+                handleMenuMenuChoice();
                 Console.Clear();
             }
         }
 
-        private void handleMenuChoice()
+        private void handleMenuMenuChoice()
         {
-            ConsoleKey keyPressed = Console.ReadKey().Key;
-            Console.WriteLine("");
+            int keyPressed;
+            string inputKeyPressed = Console.ReadLine();
+            bool goodInput = int.TryParse(inputKeyPressed, out keyPressed);
+
+            while (!goodInput || keyPressed <= 0 || keyPressed > MainMenuButtonLabels.Count)
+            {
+                Console.WriteLine("Please enter a valid menu choice!");
+                inputKeyPressed = Console.ReadLine();
+                goodInput = int.TryParse(inputKeyPressed, out keyPressed);
+            }
 
             switch(keyPressed)
             {
-                case ConsoleKey.D1:
+                case 1:
                     addVehicle();
                     break;
-                case ConsoleKey.D2:
+                case 2:
                     displayAllLicenseNumbers();
                     break;
-                case ConsoleKey.D3:
+                case 3:
                     changeVehicleState();
                     break;
-                case ConsoleKey.D4:
+                case 4:
                     inflateVehicleWheelsToMax();
                     break;
-                case ConsoleKey.D5:
+                case 5:
                     refuelPetrolVehicle();
                     break;
-                case ConsoleKey.D6:
+                case 6:
                     chargeElectricVehicle();
                     break;
-                case ConsoleKey.D7:
+                case 7:
                     displayFullCarInfo();
                     break;
-                case ConsoleKey.D8:
+                case 8:
                     exit();
                     break;
             }
 
-            Console.WriteLine("Enter key to continue...");
-            Console.ReadKey();
+            if(keyPressed != MainMenuButtonLabels.Count)
+            {
+                pause();
+            }
         }
 
         private void addVehicle()
         {
-            Console.Write("Enter license number: ");
-            string licenseInput = Console.ReadLine();
+            string licenseInput = ConsoleUIHelper.GetString("Enter license number: ");
 
-            printListWithIndex(Garage.AvailableVehiclesWithoutSpaces);
+            ConsoleUIHelper.PrintListWithIndex(Garage.AvailableVehiclesWithoutSpaces);
 
             string vehicleTypeInput = Console.ReadLine(); //TODO: check valid number
             int vehicleTypeIndex = int.Parse(vehicleTypeInput);
@@ -93,13 +100,10 @@ namespace Ex03.ConsoleUI
                         
             Garage.SetVehiclePropertiesByLicense(licenseInput, propertyList);
 
-            Console.WriteLine("Enter ower fullname: ");
-            string fullnameInput = Console.ReadLine();
+            string fullNameInput = ConsoleUIHelper.GetString("Enter ower fullname: ");
+            string phoneNumberInput = ConsoleUIHelper.GetString("Enter phone number: ");
 
-            Console.WriteLine("Enter phone number: ");
-            string phoneNumberInput = Console.ReadLine();
-
-            Garage.UpdateCustomer(licenseInput, fullnameInput, phoneNumberInput);
+            Garage.UpdateCustomer(licenseInput, fullNameInput, phoneNumberInput);
         }
 
         private void displayAllLicenseNumbers()
@@ -119,7 +123,6 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(license);
             }
-
         }
 
         private void changeVehicleState()
@@ -184,18 +187,15 @@ namespace Ex03.ConsoleUI
             IsRunning = false;
         }
 
-        private void renderMenu()
+        private void renderMainMenu()
         {
-            Console.Write(MenuString);
+            Console.WriteLine("Garage Menu:");
+            Console.WriteLine("------------");
+            foreach(string mainMenuButtonLabel in MainMenuButtonLabels)
+            {
+                Console.WriteLine(mainMenuButtonLabel);
+            }
         }
-
-
-        /// <summary>
-        /// Console utils
-        /// Console utils
-        /// Console utils
-        /// </summary>
-
 
         private string userInputGetExistLicense()
         {
@@ -204,7 +204,6 @@ namespace Ex03.ConsoleUI
             do
             {
                 licenseNumberString = Console.ReadLine();
-
             }
             while(!Garage.IsCustomerExist(licenseNumberString));
 
@@ -275,7 +274,6 @@ namespace Ex03.ConsoleUI
                 {
                     throw new FormatException("The input is not an integer.");
                 }
-
             }
             while(!(1 <= typeChoosen && typeChoosen <= Enum.GetNames(typeof(T)).Length));
 
@@ -298,12 +296,23 @@ namespace Ex03.ConsoleUI
             return enumTypesStrBuilder.ToString();
         }
 
-        private void printListWithIndex(List<string> i_ListToPrint)
+        private void pause()
         {
-            for(int i = 1; i <= i_ListToPrint.Count; i++)
-            {
-                Console.WriteLine($"{i}. {i_ListToPrint[i - 1]}");
-            }
+            Console.WriteLine("Enter key to continue...");
+            Console.ReadKey();
+        }
+
+        private void initializeMainMenuButtonLabels()
+        {
+            MainMenuButtonLabels = new List<string>();
+            MainMenuButtonLabels.Add("1. Add a new vehicle");
+            MainMenuButtonLabels.Add("2. Display all license plates");
+            MainMenuButtonLabels.Add("3. Change vehicle state");
+            MainMenuButtonLabels.Add("4. Inflate car wheels to max");
+            MainMenuButtonLabels.Add("5. Fuel petrol car");
+            MainMenuButtonLabels.Add("6. Charge electric car");
+            MainMenuButtonLabels.Add("7. Display ful car info");
+            MainMenuButtonLabels.Add("8. Exit");
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Ex03.ConsoleUI
 {
@@ -19,5 +21,21 @@ namespace Ex03.ConsoleUI
             stringBuilder.AppendLine("8. Exit");
             return stringBuilder.ToString();
         }
+
+        public static string GetString(string i_PriorMessage)
+        {
+            Console.WriteLine(i_PriorMessage);
+            return Console.ReadLine();
+        }
+
+        public static void PrintListWithIndex(List<string> i_ListToPrint)
+        {
+            for (int i = 1; i <= i_ListToPrint.Count; i++)
+            {
+                Console.WriteLine($"{i}. {i_ListToPrint[i - 1]}");
+            }
+        }
+
+
     }
 }

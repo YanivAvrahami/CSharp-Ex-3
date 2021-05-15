@@ -36,8 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Utils\AssemblyUtils.cs" />
-    <Compile Include="Commands\CreateNewVehicleCommand.cs" />
-    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Creator.cs" />
     <Compile Include="Customers\CustomerBook.cs" />
     <Compile Include="Customers\CustomerTicket.cs" />
@@ -57,5 +55,6 @@
     <Compile Include="Vehicles\RegularTruck.cs" />
     <Compile Include="Vehicles\Components\Wheel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
