@@ -5,9 +5,6 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    // TODO: create constructros for the vehicles.
-    //       create new vehicle method to complete
-
     public class Garage
     {
         private readonly CustomerBook r_CustomerBook;
@@ -45,9 +42,14 @@ namespace Ex03.GarageLogic
             r_CustomerBook.AddCustomer(customerTicket);
         }
 
-        public List<string> GetPropertiesByLicense(string i_LicenseNumber)
+        public List<string> GetVehiclePropertiesByLicense(string i_LicenseNumber)
         {
             return r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle.PropertiesNeededToFillForTheSpecificVehicle();
+        }
+
+        public void SetVehiclePropertiesByLicense(string i_LicenseNumber, List<string> i_listOfProperties)
+        {
+            r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle.InitializeProperites(i_listOfProperties);
         }
 
         public List<string> GetLicensesByState(bool i_ConsiderState, eVehicleState i_VehicleState)
