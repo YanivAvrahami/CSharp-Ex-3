@@ -28,6 +28,11 @@ namespace Ex03.GarageLogic
             CustomerDictionary.Add(i_Customer.Vehicle.LicenseNumber, i_Customer);
         }
 
+        public void RemoveCustomer(CustomerTicket i_Customer)
+        {
+            CustomerDictionary.Remove(i_Customer.Vehicle.LicenseNumber);
+        }
+
         public string GetCustomerInformationAsAstring(string i_LicenseNumber)
         {
             StringBuilder customerInfoStr = new StringBuilder();

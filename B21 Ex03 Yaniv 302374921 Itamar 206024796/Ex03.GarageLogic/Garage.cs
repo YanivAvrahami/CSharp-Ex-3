@@ -42,6 +42,13 @@ namespace Ex03.GarageLogic
             r_CustomerBook.AddCustomer(customerTicket);
         }
 
+        public void RemoveVehicle(string i_LicenseNumber)
+        {
+            CustomerTicket customerTicket = r_CustomerBook.GetCustomer(i_LicenseNumber);
+
+            r_CustomerBook.RemoveCustomer(customerTicket);
+        }
+
         public List<string> GetVehiclePropertiesByLicense(string i_LicenseNumber)
         {
             return r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle.PropertiesNeededToFillForTheSpecificVehicle();
