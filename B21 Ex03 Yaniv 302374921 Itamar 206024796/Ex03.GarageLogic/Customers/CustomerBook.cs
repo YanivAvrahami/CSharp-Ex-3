@@ -5,7 +5,6 @@ namespace Ex03.GarageLogic
 {
     class CustomerBook
     {
-        // TODO: remove this class and Garage will have the Dictionary
         public Dictionary<string, CustomerTicket> CustomerDictionary { get; set; }
 
         public CustomerBook()
@@ -33,7 +32,7 @@ namespace Ex03.GarageLogic
             CustomerDictionary.Remove(i_Customer.Vehicle.LicenseNumber);
         }
 
-        public string GetCustomerInformationAsAstring(string i_LicenseNumber)
+        public string GetCustomerInfo(string i_LicenseNumber)
         {
             StringBuilder customerInfoStr = new StringBuilder();
             CustomerTicket customer = GetCustomer(i_LicenseNumber);

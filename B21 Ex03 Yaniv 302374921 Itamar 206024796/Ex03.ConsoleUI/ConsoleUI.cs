@@ -7,29 +7,40 @@ namespace Ex03.ConsoleUI
 {
     class ConsoleUI
     {
-        public bool IsRunning { get; set; }
+        enum eMenuOption
+        {
+            AddVehicle = 1,
+            DisplayAllLicenses,
+            ChangeVehicleState,
+            InflateVehicleWheels,
+            RefuelVehicle,
+            ChargeVehicle,
+            DisplayCarInfo,
+            Exit,
+        }
 
-        public Garage Garage { get; set; }
-
-        public List<string> MainMenuButtonLabels { get; set; }
+        private bool m_IsRunning;
+        private readonly Garage r_Garage;
+        private readonly ConsoleUIHelper r_UIHelper;
+        private readonly List<string> r_MainMenuOptionsLabels;
 
         public ConsoleUI()
         {
-            IsRunning = true;
+            m_IsRunning = true;
+            r_Garage = new Garage();
+            r_UIHelper = new ConsoleUIHelper();
 
-            Garage = new Garage();
-
-            initializeMainMenuButtonLabels();
+            r_MainMenuOptionsLabels = r_UIHelper.GetMainMenuOptionsLabels();
         }
 
         public void Run()
         {
-            while(IsRunning)
+            while(m_IsRunning)
             {
                 try
                 {
                     renderMainMenu();
-                    handleMenuMenuChoice();
+                    handleMainMenu();
                 }
                 catch (ValueOutOfRangeException e)
                 {
@@ -48,181 +59,11 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine(e.Message);
                 }
 
-                if (IsRunning)
+                if (m_IsRunning)
                 {
                     pause();
                 }
             }
-        }
-
-        private void handleMenuMenuChoice()
-        {
-            int keyPressed;
-            string inputKeyPressed = Console.ReadLine();
-            bool goodInput = int.TryParse(inputKeyPressed, out keyPressed);
-
-            while (!goodInput || keyPressed <= 0 || keyPressed > MainMenuButtonLabels.Count)
-            {
-                Console.WriteLine("Please enter a valid menu choice!");
-                inputKeyPressed = Console.ReadLine();
-                goodInput = int.TryParse(inputKeyPressed, out keyPressed);
-            }
-
-            switch(keyPressed) // TODO: move to another method
-            {
-                case 1:
-                    addVehicle();
-                    break;
-                case 2:
-                    displayAllLicenseNumbers();
-                    break;
-                case 3:
-                    changeVehicleState();
-                    break;
-                case 4:
-                    inflateVehicleWheelsToMax();
-                    break;
-                case 5:
-                    refuelPetrolVehicle();
-                    break;
-                case 6:
-                    chargeElectricVehicle();
-                    break;
-                case 7:
-                    displayFullCarInfo();
-                    break;
-                case 8:
-                    exit();
-                    break;
-            }
-        }
-
-        private void addVehicle()
-        {
-            string licenseInput = ConsoleUIHelper.GetString("Enter license number: ");
-
-            ConsoleUIHelper.PrintListWithIndex(Garage.AvailableVehiclesWithoutSpaces);
-
-            string vehicleTypeInput = Console.ReadLine(); //TODO: check valid number
-            int vehicleTypeIndex = int.Parse(vehicleTypeInput);
-
-            Garage.AddVehicle(licenseInput, Garage.AvailableVehiclesWithoutSpaces[vehicleTypeIndex - 1]);
-
-            List<string> propertyList = new List<string>();
-            foreach(string propertyStr in Garage.GetVehiclePropertiesByLicense(licenseInput))
-            {
-                Console.WriteLine(propertyStr + ": ");
-                string propertyInput = Console.ReadLine();
-                propertyList.Add(propertyInput);
-            }
-
-            try
-            {
-                Garage.SetVehiclePropertiesByLicense(licenseInput, propertyList);
-            }
-            catch
-            {
-                Garage.RemoveVehicle(licenseInput);
-                throw;
-            }
-
-            string fullNameInput = ConsoleUIHelper.GetString("Enter ower fullname: ");
-            string phoneNumberInput = ConsoleUIHelper.GetString("Enter phone number: ");
-
-            Garage.UpdateCustomer(licenseInput, fullNameInput, phoneNumberInput);
-        }
-
-        private void displayAllLicenseNumbers()
-        {
-            Console.WriteLine("Filter license numbers? (y/n):");
-
-            string yesOrNoInput = Console.ReadLine();
-            bool isLicenseNumbersFiltered = false;
-
-            if(yesOrNoInput == "y")
-            {
-                isLicenseNumbersFiltered = true;
-            }
-            else
-            {
-                isLicenseNumbersFiltered = false;
-            }
-
-            eVehicleState stateTypeChoosen = eVehicleState.InRepair;
-            if(isLicenseNumbersFiltered)
-            {
-                stateTypeChoosen = userInputGetFilterState();
-            }
-
-            List<string> licenses = Garage.GetLicensesByState(isLicenseNumbersFiltered, stateTypeChoosen);
-            foreach(string license in licenses)
-            {
-                Console.WriteLine(license);
-            }
-        }
-
-        private void changeVehicleState()
-        {
-            string licenseNumberString = userInputGetExistLicenseWithMessage();
-            eVehicleState stateTypeChoosen = userInputVehicleState();
-
-            Garage.ChangeVehicleState(licenseNumberString, stateTypeChoosen);
-        }
-
-        private void inflateVehicleWheelsToMax()
-        {
-            string licenseNumberString = userInputGetExistLicenseWithMessage();
-
-            Garage.InflateVehicleWheelsToMax(licenseNumberString);
-        }
-
-        private void refuelPetrolVehicle()
-        {
-            string licenseNumberString = userInputGetExistLicenseWithMessage();
-
-            if(!Garage.IsPetrolVehicle(licenseNumberString))
-            {
-                Console.WriteLine("The vehicle is not electricity");
-            }
-            else
-            {
-                eFuelType fuelType = userInputGetFuelType();
-                float fuelAmount = userInputRefuelAmount();
-
-                Garage.RefuelPetrolVehicle(licenseNumberString, fuelType, fuelAmount);
-            }
-        }
-
-        private void chargeElectricVehicle()
-        {
-            string licenseNumberString = userInputGetExistLicenseWithMessage();
-
-            if(!Garage.IsElectricityVehicle(licenseNumberString))
-            {
-                Console.WriteLine("The vehicle is not electricity");
-            }
-            else
-            {
-                float batteryMinutes = userInputBatteryChargeTime();
-                Garage.ChargeElectricVehicle(licenseNumberString, batteryMinutes);
-            }
-        }
-
-        private void displayFullCarInfo()
-        {
-            string licenseNumberString = userInputGetExistLicenseWithMessage();
-            Console.WriteLine(Garage.GetCustomerInformationAsAstring(licenseNumberString));
-        }
-
-        private string userInputGetExistLicenseWithMessage()
-        {
-            Console.WriteLine("Enter license number:");
-            return userInputGetExistLicense();
-        }
-
-        private void exit()
-        {
-            IsRunning = false;
         }
 
         private void renderMainMenu()
@@ -231,130 +72,224 @@ namespace Ex03.ConsoleUI
 
             Console.WriteLine("Garage Menu:");
             Console.WriteLine("------------");
-            foreach(string mainMenuButtonLabel in MainMenuButtonLabels)
+            foreach (string mainMenuButtonLabel in r_MainMenuOptionsLabels)
             {
                 Console.WriteLine(mainMenuButtonLabel);
             }
         }
 
-
-
-        private string userInputGetExistLicense()
+        private void handleMainMenu()
         {
-            string licenseNumberString;
+            int menuChoice = r_UIHelper.AskOptionUntilValid("> Enter menu option: ", 1, r_MainMenuOptionsLabels.Count);
 
-            do
+            handleUserMenuChoice((eMenuOption)menuChoice);
+        }
+
+        private void handleUserMenuChoice(eMenuOption i_MenuOption)
+        {
+            switch (i_MenuOption)
             {
-                licenseNumberString = Console.ReadLine();
+                case eMenuOption.AddVehicle:
+                    addVehicle();
+                    break;
+                case eMenuOption.DisplayAllLicenses:
+                    displayAllLicenseNumbers();
+                    break;
+                case eMenuOption.ChangeVehicleState:
+                    changeVehicleState();
+                    break;
+                case eMenuOption.InflateVehicleWheels:
+                    inflateVehicleWheelsToMax();
+                    break;
+                case eMenuOption.RefuelVehicle:
+                    refuelPetrolVehicle();
+                    break;
+                case eMenuOption.ChargeVehicle:
+                    chargeElectricVehicle();
+                    break;
+                case eMenuOption.DisplayCarInfo:
+                    displayFullCarInfo();
+                    break;
+                case eMenuOption.Exit:
+                    exit();
+                    break;
             }
-            while(!Garage.IsCustomerExist(licenseNumberString));
-
-            return licenseNumberString;
         }
 
-        private eVehicleState userInputGetFilterState()
+        private void addVehicle()
         {
-            Console.WriteLine("Filter by tags:");
+            string licenseInput = r_UIHelper.GetLicenseNumber();
 
-            return userInputGetEnumTypeOption<eVehicleState>();
+            List<string> availableVehicles = StringUtils.AddSpacesToListOfStringsByUpperCase(r_Garage.AvailableVehicles);
+
+            Console.Write(StringUtils.GetListWithIndex(availableVehicles));
+
+            int vehicleTypeIndex = r_UIHelper.AskOptionUntilValid("> Enter vehicle option: ", 1, r_Garage.AvailableVehicles.Count);
+
+            r_Garage.AddVehicle(licenseInput, r_Garage.AvailableVehicles[vehicleTypeIndex - 1]);
+
+            updateVehicleProperties(licenseInput);
+            updateVehicleUserInfo(licenseInput);
         }
 
-        private eFuelType userInputGetFuelType()
+        private void displayAllLicenseNumbers()
         {
-            Console.WriteLine("Fuel Types:");
+            bool isLicenseNumbersFiltered = isLicensesFilter();
 
-            return userInputGetEnumTypeOption<eFuelType>();
-        }
-
-        private eVehicleState userInputVehicleState()
-        {
-            Console.WriteLine("Choose state:");
-
-            return userInputGetEnumTypeOption<eVehicleState>();
-        }
-
-        private float userInputBatteryChargeTime()
-        {
-            Console.Write("Enter Charging time in minutes: ");
-
-            return userInputIncreaseEnergy();
-        }
-
-        private float userInputRefuelAmount()
-        {
-            Console.Write("Enter fuel amount: ");
-
-            return userInputIncreaseEnergy();
-        }
-
-        private float userInputIncreaseEnergy()
-        {
-            string EnergyToIncreaseStr;
-            float EnergyToIncrease;
-
-            EnergyToIncreaseStr = Console.ReadLine();
-            if(!float.TryParse(EnergyToIncreaseStr, out EnergyToIncrease))
+            eVehicleState stateTypeChoosen = eVehicleState.InRepair;
+            if(isLicenseNumbersFiltered)
             {
-                throw new FormatException("The input is not a float.");
+                stateTypeChoosen = r_UIHelper.GetFilterState();
             }
 
-            return EnergyToIncrease;
+            List<string> licenses = r_Garage.GetLicensesByState(isLicenseNumbersFiltered, stateTypeChoosen);
+            foreach(string license in licenses)
+            {
+                Console.WriteLine(license);
+            }
         }
 
-        private T userInputGetEnumTypeOption<T>()
+        private bool isLicensesFilter()
         {
-            Console.WriteLine(getEnumAsStringOptions<T>());
+            Console.Write("Filter license numbers? (y/n): ");
+            string yesOrNoInput = Console.ReadLine();
+            bool isLicenseNumbersFiltered;
 
-            string inputStr;
-            int typeChoosen;
-
-            do
+            if (yesOrNoInput == "y")
             {
-                inputStr = Console.ReadLine();
+                isLicenseNumbersFiltered = true;
+            }
+            else
+            {
+                isLicenseNumbersFiltered = false;
+            }
 
-                if(!int.TryParse(inputStr, out typeChoosen))
+            return isLicenseNumbersFiltered;
+        }
+
+        private void changeVehicleState()
+        {
+            string licenseStr = r_UIHelper.GetLicenseNumber();
+            if (r_Garage.IsCustomerExist(licenseStr))
+            {
+                eVehicleState stateTypeChoosen = r_UIHelper.GetVehicleState();
+
+                r_Garage.ChangeVehicleState(licenseStr, stateTypeChoosen);
+            }
+            else
+            {
+                Console.WriteLine("License does not exist in the garage.");
+            }
+        }
+
+        private void inflateVehicleWheelsToMax()
+        {
+            string licenseStr = r_UIHelper.GetLicenseNumber();
+            if (r_Garage.IsCustomerExist(licenseStr))
+            {
+                r_Garage.InflateVehicleWheelsToMax(licenseStr);
+            }
+            else
+            {
+                Console.WriteLine("License does not exist in the garage.");
+            }
+        }
+
+        private void refuelPetrolVehicle()
+        {
+            string licenseStr = r_UIHelper.GetLicenseNumber();
+            if (r_Garage.IsCustomerExist(licenseStr))
+            {
+                if (!r_Garage.IsPetrolVehicle(licenseStr))
                 {
-                    throw new FormatException("The input is not an integer.");
+                    Console.WriteLine("The vehicle is not petrol vehicle");
+                }
+                else
+                {
+                    eFuelType fuelType = r_UIHelper.GetFuelType();
+                    float fuelAmount = r_UIHelper.RefuelAmount();
+
+                    r_Garage.RefuelPetrolVehicle(licenseStr, fuelType, fuelAmount);
                 }
             }
-            while(!(1 <= typeChoosen && typeChoosen <= Enum.GetNames(typeof(T)).Length));
-
-            return (T)Enum.Parse(typeof(T), (typeChoosen - 1).ToString());
+            else
+            {
+                Console.WriteLine("License does not exist in the garage.");
+            }
         }
 
-        private string getEnumAsStringOptions<T>() // TODO: move to UI logic
+        private void chargeElectricVehicle()
         {
-            StringBuilder enumTypesStrBuilder = new StringBuilder();
-            int index = 1;
-
-            foreach(string currentEnumTypeName in Enum.GetNames(typeof(T)))
+            string licenseStr = r_UIHelper.GetLicenseNumber();
+            if (r_Garage.IsCustomerExist(licenseStr))
             {
-                enumTypesStrBuilder.AppendLine($"{index}. {currentEnumTypeName}");
-                index++;
+                if (!r_Garage.IsElectricityVehicle(licenseStr))
+                {
+                    Console.WriteLine("The vehicle is not electricity vehicle");
+                }
+                else
+                {
+                    float batteryMinutes = r_UIHelper.BatteryChargeTime();
+                    r_Garage.ChargeElectricVehicle(licenseStr, batteryMinutes);
+                }
+            }
+            else
+            {
+                Console.WriteLine("License does not exist in the garage.");
+            }
+        }
+
+        private void displayFullCarInfo()
+        {
+            string licenseStr = r_UIHelper.GetLicenseNumber();
+            if (r_Garage.IsCustomerExist(licenseStr))
+            {
+                Console.WriteLine(r_Garage.GetCustomerInformationAsAstring(licenseStr));
+            }
+            else
+            {
+                Console.WriteLine("License does not exist in the garage.");
+            }
+        }
+
+        private void updateVehicleProperties(string i_LicenseNumber)
+        {
+            List<string> propertyList = new List<string>();
+            foreach (string propertyStr in r_Garage.GetVehiclePropertiesByLicense(i_LicenseNumber))
+            {
+                Console.Write("> " + propertyStr + ": ");
+                string propertyInput = Console.ReadLine();
+                propertyList.Add(propertyInput);
             }
 
-            enumTypesStrBuilder.AppendLine("Enter option: ");
+            try
+            {
+                r_Garage.SetVehiclePropertiesByLicense(i_LicenseNumber, propertyList);
+            }
+            catch
+            {
+                r_Garage.RemoveVehicle(i_LicenseNumber);
+                throw;
+            }
+        }
 
-            return enumTypesStrBuilder.ToString();
+        private void updateVehicleUserInfo(string i_LicenseNumber)
+        {
+            string fullNameInput = r_UIHelper.GetString("Enter ower fullname: ");
+            string phoneNumberInput = r_UIHelper.GetString("Enter phone number: ");
+
+            r_Garage.UpdateCustomer(i_LicenseNumber, fullNameInput, phoneNumberInput);
+        }
+
+        private void exit()
+        {
+            m_IsRunning = false;
         }
 
         private void pause()
         {
             Console.WriteLine("Enter key to continue...");
             Console.ReadKey();
-        }
-
-        private void initializeMainMenuButtonLabels()
-        {
-            MainMenuButtonLabels = new List<string>();
-            MainMenuButtonLabels.Add("1. Add a new vehicle");
-            MainMenuButtonLabels.Add("2. Display all license plates");
-            MainMenuButtonLabels.Add("3. Change vehicle state");
-            MainMenuButtonLabels.Add("4. Inflate car wheels to max");
-            MainMenuButtonLabels.Add("5. Fuel petrol car");
-            MainMenuButtonLabels.Add("6. Charge electric car");
-            MainMenuButtonLabels.Add("7. Display ful car info");
-            MainMenuButtonLabels.Add("8. Exit");
         }
     }
 }

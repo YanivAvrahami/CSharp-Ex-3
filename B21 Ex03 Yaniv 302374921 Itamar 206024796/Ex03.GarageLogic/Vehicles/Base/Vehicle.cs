@@ -46,7 +46,7 @@ namespace Ex03.GarageLogic
             return infoStrBuilder.ToString();
         }
 
-        public virtual List<string> PropertiesNeededToFillForTheSpecificVehicle()
+        public virtual List<string> PropertiesToInitialize()
         {
             List<string> propertiesToFill = new List<string>();
 

@@ -37,8 +37,8 @@
   <ItemGroup>
     <Compile Include="ConsoleUI.cs" />
     <Compile Include="ConsoleUIHelper.cs" />
-    <Compile Include="FactoryMenus.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="StringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ex03.GarageLogic\Ex03.GarageLogic.csproj">

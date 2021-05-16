@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -13,9 +14,19 @@ namespace Ex03.GarageLogic
         {
         }
 
-        public override List<string> PropertiesNeededToFillForTheSpecificVehicle()
+        public override string GetVehicleInfo()
         {
-            List<string> listOfProperties = base.PropertiesNeededToFillForTheSpecificVehicle();
+            StringBuilder infoStrBuilder = new StringBuilder(base.GetVehicleInfo());
+
+            infoStrBuilder.AppendLine($"Has hazardous cargo: {HasHazardous}");
+            infoStrBuilder.AppendLine($"Maximum carry: {MaxCarry}");
+
+            return infoStrBuilder.ToString();
+        }
+
+        public override List<string> PropertiesToInitialize()
+        {
+            List<string> listOfProperties = base.PropertiesToInitialize();
 
             listOfProperties.Add("has hazardous cargo");
             listOfProperties.Add("max carry");

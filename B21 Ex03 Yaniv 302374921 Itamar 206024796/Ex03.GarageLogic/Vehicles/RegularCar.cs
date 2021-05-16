@@ -38,9 +38,9 @@ namespace Ex03.GarageLogic
             return infoStrBuilder.ToString();
         }
 
-        public override List<string> PropertiesNeededToFillForTheSpecificVehicle()
+        public override List<string> PropertiesToInitialize()
         {
-            List<string> listOfProperties = base.PropertiesNeededToFillForTheSpecificVehicle();
+            List<string> listOfProperties = base.PropertiesToInitialize();
 
             listOfProperties.Add("color");
             listOfProperties.Add("doors");

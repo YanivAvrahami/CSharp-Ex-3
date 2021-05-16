@@ -5,15 +5,15 @@ namespace Ex03.GarageLogic
 {
     class Creator
     {
-        private static Dictionary<string, Type> m_VehiclesTypes;
+        private readonly Dictionary<string, Type> r_VehiclesTypes;
         public List<string> AvailableVehicles { get; private set; }
 
         public Creator()
         {
-            m_VehiclesTypes = AssemblyUtils.GetDictOfNamesAndTypesOfASubClass(typeof(Vehicle), false);
+            r_VehiclesTypes = AssemblyUtils.GetDictOfNamesAndTypesOfASubClass(typeof(Vehicle), false);
             AvailableVehicles = new List<string>();
 
-            foreach (string vehicleName in m_VehiclesTypes.Keys)
+            foreach (string vehicleName in r_VehiclesTypes.Keys)
             {
                 AvailableVehicles.Add(vehicleName);
             }
@@ -21,7 +21,7 @@ namespace Ex03.GarageLogic
 
         public Vehicle CreateNewVehicle(string i_Vehicle)
         {
-            return Activator.CreateInstance(m_VehiclesTypes[i_Vehicle]) as Vehicle;
+            return Activator.CreateInstance(r_VehiclesTypes[i_Vehicle]) as Vehicle;
         }
     }
 }

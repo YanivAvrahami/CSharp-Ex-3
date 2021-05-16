@@ -8,19 +8,19 @@ namespace Ex03.GarageLogic
         private readonly CustomerBook r_CustomerBook;
         private readonly Creator r_VehicleCreator;
 
-        public List<string> AvailableVehiclesWithoutSpaces { get; private set; }
+        public List<string> AvailableVehicles { get; private set; }
 
         public Garage()
         {
             r_CustomerBook = new CustomerBook();
             r_VehicleCreator = new Creator();
 
-            AvailableVehiclesWithoutSpaces = r_VehicleCreator.AvailableVehicles;
+            AvailableVehicles = r_VehicleCreator.AvailableVehicles;
         }
 
         public void AddVehicle(string i_LicenseNumber, string i_VehicleNameStr)
         {
-            if (!AvailableVehiclesWithoutSpaces.Contains(i_VehicleNameStr))
+            if (!AvailableVehicles.Contains(i_VehicleNameStr))
             {
                 throw new FormatException("The requested type is not a vehicle");
             }
@@ -49,7 +49,7 @@ namespace Ex03.GarageLogic
 
         public List<string> GetVehiclePropertiesByLicense(string i_LicenseNumber)
         {
-            return r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle.PropertiesNeededToFillForTheSpecificVehicle();
+            return r_CustomerBook.GetCustomer(i_LicenseNumber).Vehicle.PropertiesToInitialize();
         }
 
         public void SetVehiclePropertiesByLicense(string i_LicenseNumber, List<string> i_listOfProperties)
@@ -113,7 +113,7 @@ namespace Ex03.GarageLogic
 
         public string GetCustomerInformationAsAstring(string i_LicenseNumber)
         {
-            return r_CustomerBook.GetCustomerInformationAsAstring(i_LicenseNumber);
+            return r_CustomerBook.GetCustomerInfo(i_LicenseNumber);
         }
 
         public bool IsPetrolVehicle(string i_LicenseNumber)

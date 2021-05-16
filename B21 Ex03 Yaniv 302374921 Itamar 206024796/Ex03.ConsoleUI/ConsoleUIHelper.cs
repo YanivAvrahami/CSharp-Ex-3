@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ex03.GarageLogic;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,36 +7,106 @@ namespace Ex03.ConsoleUI
 {
     class ConsoleUIHelper
     {
-        public static string CreateMenuString()
+        public List<string> GetMainMenuOptionsLabels()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("Garage Menu:");
-            stringBuilder.AppendLine("------------");
-            stringBuilder.AppendLine("1. Add a new vehicle");
-            stringBuilder.AppendLine("2. Display all license plates");
-            stringBuilder.AppendLine("3. Change vehicle state");
-            stringBuilder.AppendLine("4. Inflate car wheels to max");
-            stringBuilder.AppendLine("5. Fuel petrol car");
-            stringBuilder.AppendLine("6. Charge electric car");
-            stringBuilder.AppendLine("7. Display full car info");
-            stringBuilder.AppendLine("8. Exit");
-            return stringBuilder.ToString();
+            List<string> mainMenuOptions = new List<string>();
+
+            mainMenuOptions.Add("1. Add a new vehicle");
+            mainMenuOptions.Add("2. Display all license plates");
+            mainMenuOptions.Add("3. Change vehicle state");
+            mainMenuOptions.Add("4. Inflate car wheels to max");
+            mainMenuOptions.Add("5. Fuel petrol car");
+            mainMenuOptions.Add("6. Charge electric car");
+            mainMenuOptions.Add("7. Display ful car info");
+            mainMenuOptions.Add("8. Exit");
+
+            return mainMenuOptions;
         }
 
-        public static string GetString(string i_PriorMessage)
+        public string GetString(string i_PriorMessage)
         {
-            Console.WriteLine(i_PriorMessage);
+            Console.Write(i_PriorMessage);
             return Console.ReadLine();
         }
 
-        public static void PrintListWithIndex(List<string> i_ListToPrint)
+        public int AskOptionUntilValid(string i_MessageToAsk, int i_MinVal, int i_MaxVal)
         {
-            for (int i = 1; i <= i_ListToPrint.Count; i++)
+            int userChoice;
+            bool isGoodInput;
+
+            do
             {
-                Console.WriteLine($"{i}. {i_ListToPrint[i - 1]}");
+                Console.Write(i_MessageToAsk);
+                string userInputStr = Console.ReadLine();
+                isGoodInput = int.TryParse(userInputStr, out userChoice);
+
             }
+            while (!isGoodInput || !(i_MinVal <= userChoice && userChoice <= i_MaxVal));
+
+            return userChoice;
         }
 
+        public string GetLicenseNumber()
+        {
+            return GetString("> Enter license number: ");
+        }
 
+        public eVehicleState GetFilterState()
+        {
+            Console.WriteLine("Filter by tags:");
+
+            return getEnumTypeOption<eVehicleState>();
+        }
+
+        public eFuelType GetFuelType()
+        {
+            Console.WriteLine("Fuel Types:");
+
+            return getEnumTypeOption<eFuelType>();
+        }
+
+        public eVehicleState GetVehicleState()
+        {
+            Console.WriteLine("Choose state:");
+
+            return getEnumTypeOption<eVehicleState>();
+        }
+
+        public float BatteryChargeTime()
+        {
+            Console.Write("Enter Charging time in minutes: ");
+
+            return IncreaseEnergy();
+        }
+
+        public float RefuelAmount()
+        {
+            Console.Write("Enter fuel amount: ");
+
+            return IncreaseEnergy();
+        }
+
+        public float IncreaseEnergy()
+        {
+            string EnergyToIncreaseStr;
+            float EnergyToIncrease;
+
+            EnergyToIncreaseStr = Console.ReadLine();
+            if (!float.TryParse(EnergyToIncreaseStr, out EnergyToIncrease))
+            {
+                throw new FormatException("The input is not a float.");
+            }
+
+            return EnergyToIncrease;
+        }
+
+        private T getEnumTypeOption<T>()
+        {
+            Console.WriteLine(StringUtils.GetEnumAsStringOptions<T>());
+
+            int typeChoosen = AskOptionUntilValid("> Enter option: ", 1, Enum.GetValues(typeof(T)).Length);
+
+            return (T)Enum.Parse(typeof(T), typeChoosen.ToString());
+        }
     }
 }
