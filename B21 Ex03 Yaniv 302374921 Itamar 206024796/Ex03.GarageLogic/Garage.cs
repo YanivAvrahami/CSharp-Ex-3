@@ -25,7 +25,7 @@ namespace Ex03.GarageLogic
                 throw new FormatException("The requested type is not a vehicle");
             }
 
-            if (r_CustomerBook.IsCustomerExist(i_LicenseNumber)) // TODO: Check if the UI handle it. If so, remove this condition block.
+            if (r_CustomerBook.IsCustomerExist(i_LicenseNumber))
             {
                 r_CustomerBook.GetCustomer(i_LicenseNumber).VehicleState = eVehicleState.InRepair;
 

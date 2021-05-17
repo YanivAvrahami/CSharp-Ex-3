@@ -46,6 +46,10 @@ namespace Ex03.GarageLogic
             return infoStrBuilder.ToString();
         }
 
+        /// <summary>
+        /// Give the properties that need to be filled after creation
+        /// </summary>
+        /// <returns>A list of the required properties to initialize</returns>
         public virtual List<string> PropertiesToInitialize()
         {
             List<string> propertiesToFill = new List<string>();
@@ -58,21 +62,13 @@ namespace Ex03.GarageLogic
             return propertiesToFill;
         }
 
+        /// <summary>
+        /// Set the properties that need to be filled
+        /// </summary>
+        /// <param name="i_PropertiesToCastAndFill">list of the properties values as string</param>
         public virtual void InitializeProperites(List<string> i_PropertiesToCastAndFill)
         {
-            // TODO: Move to different methods OR setters?
-
-            if (float.TryParse(i_PropertiesToCastAndFill[0], out float wheelsAirPressure))
-            {
-                foreach (Wheel wheel in Wheels)
-                {
-                    wheel.CurrentAirPressure = wheelsAirPressure;
-                }
-            }
-            else
-            {
-                throw new FormatException("Problem parsing the string to value...");
-            }
+            initWheelsAirPressure(i_PropertiesToCastAndFill[0]);
 
             string wheelsManifacture = i_PropertiesToCastAndFill[1];
             foreach (Wheel wheel in Wheels)
@@ -83,7 +79,29 @@ namespace Ex03.GarageLogic
             string modelName = i_PropertiesToCastAndFill[2];
             ModelName = modelName;
 
-            if (float.TryParse(i_PropertiesToCastAndFill[3], out float energyPercentage))
+            initEnergyPercentage(i_PropertiesToCastAndFill[3]);
+
+            i_PropertiesToCastAndFill.RemoveRange(0, 4);
+        }
+
+        private void initWheelsAirPressure(string i_WheelsAirPressureStr)
+        {
+            if (float.TryParse(i_WheelsAirPressureStr, out float wheelsAirPressure))
+            {
+                foreach (Wheel wheel in Wheels)
+                {
+                    wheel.CurrentAirPressure = wheelsAirPressure;
+                }
+            }
+            else
+            {
+                throw new FormatException("Problem parsing the string to value...");
+            }
+        }
+
+        private void initEnergyPercentage(string i_EnergyPercentageStr)
+        {
+            if (float.TryParse(i_EnergyPercentageStr, out float energyPercentage))
             {
                 EnergyPercentage = energyPercentage;
             }
@@ -91,8 +109,6 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException("Problem parsing the string to value...");
             }
-
-            i_PropertiesToCastAndFill.RemoveRange(0, 4);
         }
     }
 }

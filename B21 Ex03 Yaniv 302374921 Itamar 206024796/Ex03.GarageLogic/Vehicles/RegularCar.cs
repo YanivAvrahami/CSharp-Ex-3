@@ -52,16 +52,16 @@ namespace Ex03.GarageLogic
         {
             base.InitializeProperites(i_PropertiesToCastAndFill);
 
-            try
-            {
-                Color = (eColor)Enum.Parse(typeof(eColor), i_PropertiesToCastAndFill[0]);
-            }
-            catch
-            {
-                throw new FormatException("There was a problem parsing a string to eColor enum.");
-            }
+            initColorFromStr(i_PropertiesToCastAndFill[0]);
+            initDoorsFromStr(i_PropertiesToCastAndFill[1]);
 
-            if (int.TryParse(i_PropertiesToCastAndFill[1], out int doorNumber))
+            i_PropertiesToCastAndFill.RemoveRange(0, 2);
+        }
+
+        private void initDoorsFromStr(string i_DoorsStr)
+        {
+
+            if (int.TryParse(i_DoorsStr, out int doorNumber))
             {
                 Doors = doorNumber;
             }
@@ -69,8 +69,18 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException("Problem parsing the string to value...");
             }
+        }
 
-            i_PropertiesToCastAndFill.RemoveRange(0, 2);
+        private void initColorFromStr(string i_ColorStr)
+        {
+            try
+            {
+                Color = (eColor)Enum.Parse(typeof(eColor), i_ColorStr);
+            }
+            catch
+            {
+                throw new FormatException("There was a problem parsing a string to eColor enum.");
+            }
         }
     }
 }

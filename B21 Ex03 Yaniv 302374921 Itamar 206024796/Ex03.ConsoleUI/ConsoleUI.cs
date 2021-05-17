@@ -126,7 +126,14 @@ namespace Ex03.ConsoleUI
 
             int vehicleTypeIndex = r_UIHelper.AskOptionUntilValid("> Enter vehicle option: ", 1, r_Garage.AvailableVehicles.Count);
 
-            r_Garage.AddVehicle(licenseInput, r_Garage.AvailableVehicles[vehicleTypeIndex - 1]);
+            if (r_Garage.IsCustomerExist(licenseInput))
+            {
+                r_Garage.ChangeVehicleState(licenseInput, eVehicleState.InRepair);
+            }
+            else
+            {
+                r_Garage.AddVehicle(licenseInput, r_Garage.AvailableVehicles[vehicleTypeIndex - 1]);
+            }
 
             updateVehicleProperties(licenseInput);
             updateVehicleUserInfo(licenseInput);

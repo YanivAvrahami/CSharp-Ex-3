@@ -38,16 +38,27 @@ namespace Ex03.GarageLogic
         {
             base.InitializeProperites(i_PropertiesToCastAndFill);
 
+            initLicense(i_PropertiesToCastAndFill[0]);
+            initEngineVolume(i_PropertiesToCastAndFill[1]);
+
+            i_PropertiesToCastAndFill.RemoveRange(0, 2);
+        }
+
+        private void initLicense(string i_LicenseStr)
+        {
             try
             {
-                License = (eLicense)Enum.Parse(typeof(eLicense), i_PropertiesToCastAndFill[0]);
+                License = (eLicense)Enum.Parse(typeof(eLicense), i_LicenseStr);
             }
             catch
             {
-                throw new FormatException("There was a problem parsing a string to eColor enum.");
+                throw new FormatException("There was a problem parsing a string to eLicense enum.");
             }
+        }
 
-            if (int.TryParse(i_PropertiesToCastAndFill[1], out int engineVolume))
+        private void initEngineVolume(string i_EngineVolumeStr)
+        {
+            if (int.TryParse(i_EngineVolumeStr, out int engineVolume))
             {
                 EngineVolume = engineVolume;
             }
@@ -55,8 +66,6 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException("Problem parsing the string to value...");
             }
-
-            i_PropertiesToCastAndFill.RemoveRange(0, 2);
         }
     }
 }

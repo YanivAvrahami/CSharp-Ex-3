@@ -38,7 +38,15 @@ namespace Ex03.GarageLogic
         {
             base.InitializeProperites(i_PropertiesToCastAndFill);
 
-            if (bool.TryParse(i_PropertiesToCastAndFill[0], out bool hasHazardous))
+            initHazardousFromStr(i_PropertiesToCastAndFill[0]);
+            initMaxCarryFromStr(i_PropertiesToCastAndFill[1]);
+
+            i_PropertiesToCastAndFill.RemoveRange(0, 2);
+        }
+
+        private void initHazardousFromStr(string i_HasHazStr)
+        {
+            if (bool.TryParse(i_HasHazStr, out bool hasHazardous))
             {
                 HasHazardous = hasHazardous;
             }
@@ -46,8 +54,11 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException("Problem parsing the string to value...");
             }
+        }
 
-            if (float.TryParse(i_PropertiesToCastAndFill[1], out float maxCarry))
+        private void initMaxCarryFromStr(string i_MaxCarryStr)
+        {
+            if (float.TryParse(i_MaxCarryStr, out float maxCarry))
             {
                 MaxCarry = maxCarry;
             }
@@ -55,8 +66,6 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException("Problem parsing the string to value...");
             }
-
-            i_PropertiesToCastAndFill.RemoveRange(0, 2);
         }
     }
 }

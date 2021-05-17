@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Ex03.GarageLogic
@@ -19,6 +20,11 @@ namespace Ex03.GarageLogic
 
         public CustomerTicket GetCustomer(string i_LicenseNumber)
         {
+            if (!IsCustomerExist(i_LicenseNumber))
+            {
+                throw new ArgumentException("Customer does not exist");
+            }
+
             return CustomerDictionary[i_LicenseNumber];
         }
 
@@ -34,6 +40,11 @@ namespace Ex03.GarageLogic
 
         public string GetCustomerInfo(string i_LicenseNumber)
         {
+            if (!IsCustomerExist(i_LicenseNumber))
+            {
+                throw new ArgumentException("Customer does not exist");
+            }
+
             StringBuilder customerInfoStr = new StringBuilder();
             CustomerTicket customer = GetCustomer(i_LicenseNumber);
             Vehicle vehicle = customer.Vehicle;
