@@ -106,7 +106,7 @@ namespace Ex03.ConsoleUI
 
             int typeChoosen = AskOptionUntilValid("> Enter option: ", 1, Enum.GetValues(typeof(T)).Length);
 
-            return (T)Enum.Parse(typeof(T), typeChoosen.ToString());
+            return (T)Enum.Parse(typeof(T), (typeChoosen - 1).ToString());
         }
     }
 }

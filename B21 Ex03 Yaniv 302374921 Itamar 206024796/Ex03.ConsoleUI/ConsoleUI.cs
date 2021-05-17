@@ -120,23 +120,23 @@ namespace Ex03.ConsoleUI
         {
             string licenseInput = r_UIHelper.GetLicenseNumber();
 
-            List<string> availableVehicles = StringUtils.AddSpacesToListOfStringsByUpperCase(r_Garage.AvailableVehicles);
-
-            Console.Write(StringUtils.GetListWithIndex(availableVehicles));
-
-            int vehicleTypeIndex = r_UIHelper.AskOptionUntilValid("> Enter vehicle option: ", 1, r_Garage.AvailableVehicles.Count);
-
             if (r_Garage.IsCustomerExist(licenseInput))
             {
+                Console.WriteLine("License already exist. Move vehicle state to be in repair");
                 r_Garage.ChangeVehicleState(licenseInput, eVehicleState.InRepair);
             }
             else
             {
-                r_Garage.AddVehicle(licenseInput, r_Garage.AvailableVehicles[vehicleTypeIndex - 1]);
-            }
+                List<string> availableVehicles = StringUtils.AddSpacesToListOfStringsByUpperCase(r_Garage.AvailableVehicles);
+                Console.Write(StringUtils.GetListWithIndex(availableVehicles));
 
-            updateVehicleProperties(licenseInput);
-            updateVehicleUserInfo(licenseInput);
+                int vehicleTypeIndex = r_UIHelper.AskOptionUntilValid("> Enter vehicle option: ", 1, r_Garage.AvailableVehicles.Count);
+
+                r_Garage.AddVehicle(licenseInput, r_Garage.AvailableVehicles[vehicleTypeIndex - 1]);
+
+                updateVehicleProperties(licenseInput);
+                updateVehicleUserInfo(licenseInput);
+            }
         }
 
         private void displayAllLicenseNumbers()
